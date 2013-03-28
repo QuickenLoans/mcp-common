@@ -13,6 +13,7 @@ pake_alias('default', 'test');
  */
 function run_test()
 {
+    pake_sh('vendor/bin/phpunit', true);
 }
 
 /**
