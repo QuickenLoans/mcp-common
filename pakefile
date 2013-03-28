@@ -1,0 +1,50 @@
+<?php
+pake_require_version('1.7.3');
+
+pake_task('setup');
+pake_task('prepare', 'setup');
+pake_task('clean');
+pake_task('clean_all', 'clean');
+pake_task('test', 'prepare');
+pake_alias('default', 'test');
+
+/**
+ * Runs unit test suit
+ */
+function run_test()
+{
+}
+
+/**
+ * Sets up build directory and installs dev tools
+ */
+function run_prepare()
+{
+    pake_mkdirs('build');
+}
+
+/**
+ * Runs composer to setup all runtime and dev dependencies
+ */
+function run_setup()
+{
+    $cmd = 'bin/composer install --dev';
+    pake_echo_comment($cmd);
+    pake_sh($cmd, true);
+}
+
+/**
+ * Removes all build artifacts (basically anything in the build dir)
+ */
+function run_clean()
+{
+    pake_remove_dir('build');
+}
+
+/**
+ * Removes all build artifacts as well as the vendor directory
+ */
+function run_clean_all()
+{
+    pake_remove_dir('vendor');
+}

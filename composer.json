@@ -1,0 +1,34 @@
+{
+    "name": "ql/mcp-core",
+    "description": "Core data structures used by all other mcp packages.",
+    "authors": [
+        {
+            "name": "Matt Nagi",
+            "email": "mattnagi@quickenloans.com",
+            "role": "Tech Lead"
+        }
+    ],
+    "support": {
+        "email": "mattnagi@quickenloans.com",
+        "issues": "http://git/mnagi/mcp-core/issues",
+        "source": "http://git/mnagi/mcp-core"
+    },
+    "require": {
+        "php": ">=5.4.11",
+        "ext-date": "*",
+        "ext-pcre": "*",
+        "ext-SPL": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "squizlabs/php_codesniffer": "*",
+        "pdepend/pdepend": "*",
+        "phpmd/phpmd": "*",
+        "phpunit/php-invoker": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "MCP": "src"
+        }
+    }
+}
