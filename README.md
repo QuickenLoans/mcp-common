@@ -21,7 +21,6 @@ the same as an RFC 4122 UUID, standard variant, 4th algorithm (see chapter 4.4
 of the RFC for details).
 
 ```php
-<?php
 use MCP\DataType\GUID;
 
 $guid = GUID::create();
@@ -44,9 +43,8 @@ $guid7 = GUID::createFromHex('{4FF9746A-BAEE-4FA3-973B-B3B740E3812A}');
 $guid8 = GUID::createFromHex('{4ff9746a-baee-4fa3-973b-b3b740e3812a}');
 $guid9 = GUID::createFromBase64('T/l0arruT6OXO7O3QOOBKg==');
 
-```
+//----------------
 
-```php
 $guid = GUID::createFromHex('{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}');
 
 $guid->asHex();           // '0C875FFC61AB4A75A4AF5F89ADCE0D63'
@@ -61,8 +59,8 @@ echo $guid;               // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
 This represents an HTTP URL.
 
 ```php
-<?php
 use MCP\DataType\HttpUrl;
+
 $url = HttpUrl::create('https://example.com:3000/s/a%40a?q=term&l=utf-8');
 
 echo $url->protocol(); // 'https'
