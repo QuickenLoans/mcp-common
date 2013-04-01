@@ -1,5 +1,5 @@
 {
-    "hash": "0cf5404181ad570f5d1fe6b94360774c",
+    "hash": "a4310aee691aaa66dddd76c661de88e7",
     "packages": [
 
     ],
@@ -582,7 +582,7 @@
 
     ],
     "platform": {
-        "php": ">=5.4.11",
+        "php": ">=5.4.0",
         "ext-date": "*",
         "ext-pcre": "*",
         "ext-spl": "*"

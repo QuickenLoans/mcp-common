@@ -228,8 +228,7 @@ constructed differently.
 
 This is a wrapper for the native php [DateTime](http://php.net/DateTime) class.
 The changes made to the public API for this class are means to a very specific
-goal: less sloppiness in time handling in our programs. Some of the alterations
-are meant to:
+set of goals. These goals are as follows:
 
 1. Force the creation of a TimePoint to specify a time zone. A time without a
    timezone is a unitless number (remember 6th grade science class!).

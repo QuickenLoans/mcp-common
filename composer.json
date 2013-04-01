@@ -1,11 +1,13 @@
 {
     "name": "ql/mcp-core",
     "description": "Core data structures used by all other mcp packages.",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Matt Nagi",
             "email": "mattnagi@quickenloans.com",
-            "role": "Tech Lead"
+            "role": "Tech Lead",
+            "homepage": "http://rwprofile/MySite/Public.aspx?accountname=MI%5cMNagi"
         }
     ],
     "support": {
@@ -14,7 +16,7 @@
         "source": "http://git/mnagi/mcp-core"
     },
     "require": {
-        "php": ">=5.4.11",
+        "php": ">=5.4.0",
         "ext-date": "*",
         "ext-pcre": "*",
         "ext-SPL": "*"
