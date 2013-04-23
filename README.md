@@ -3,6 +3,20 @@
 This package mostly provides shared code that is used by most other MCP
 packages.
 
+## Installing ##
+
+Add the following lines to your composer.json file:
+
+```
+  "repositories": [
+    { "type": "composer", "url": "http://composer/" }
+  ],
+
+  "require": {
+    "ql/mcp-core": "*"
+  }
+```
+
 ## Classes ##
 
 - GUID

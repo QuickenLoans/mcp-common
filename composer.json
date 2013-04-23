@@ -21,6 +21,9 @@
         "ext-pcre": "*",
         "ext-SPL": "*"
     },
+    "conflict": {
+        "ql/mcp": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "*",
         "squizlabs/php_codesniffer": "*",
