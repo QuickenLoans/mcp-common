@@ -3,6 +3,10 @@
 This package mostly provides shared code that is used by most other MCP
 packages.
 
+Note that the goal of these classes are to be **value classes**. This means
+they are *immutable* and are supposed to act like a scalar value. The only
+exception to this rule might be the Clock class.
+
 ## Installing ##
 
 Add the following lines to your composer.json file:
@@ -81,7 +85,7 @@ echo $url->protocol(); // 'https'
 echo $url->secure(); // true (returns false if $url->protocol() was 'http')
 echo $url->host(); // 'example.com'
 echo $url->port(); // 3000
-echo $url->path(); // /search/a%40a
+echo $url->path(); // /s/a%40a
 echo $url->segments(); // array('s', 'a@a')
 echo $url->queryData(); // array('q' => 'term', 'l' => 'utf-8')
 ```

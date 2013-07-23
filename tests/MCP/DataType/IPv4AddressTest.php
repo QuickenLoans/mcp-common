@@ -39,6 +39,21 @@ class IPv4AddressTest extends PHPUnit_Framework_TestCase
      * @group IP
      * @covers MCP\DataType\IPv4Address
      */
+    public function testCreateWithDotSeparatedOctetStirngReturnsExpectedFloat()
+    {
+        $input = '192.168.0.1';
+        $expected = 3232235521.0;
+        $actual = IPv4Address::create($input);
+        $actual = $actual->asFloat();
+
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @group DataType
+     * @group IP
+     * @covers MCP\DataType\IPv4Address
+     */
     public function testCreateWithDotSeparatedOctetStringReturnsSameString()
     {
         $input    = '192.168.0.1';

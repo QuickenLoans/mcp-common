@@ -116,11 +116,29 @@ class IPv4Address
     }
 
     /**
+     * Returns the raw integer form of the IP
+     *
+     * This is almost never what you want to use. Instead use asFloat().
+     *
      * @return int
      */
     public function asInt()
     {
         return $this->address;
+    }
+
+    /**
+     * Returns the IP as a float
+     *
+     * This will remove any platform specific issues and always return the
+     * address in 'unsigned integer' form. If you're going to be doing any
+     * comparisons of addresses or address ranges, use this representation.
+     *
+     * @return float
+     */
+    public function asFloat()
+    {
+        return (float) sprintf('%u', $this->address);
     }
 
     /**

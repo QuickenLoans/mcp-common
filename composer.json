@@ -1,6 +1,6 @@
 {
     "name": "ql/mcp-core",
-    "description": "Core data structures used by all other mcp packages.",
+    "description": "Provides various 'data type' style classes: GUID, HttpUrl, IPv4Address, USAddress, and date/time related functionality.",
     "license": "proprietary",
     "authors": [
         {
@@ -26,10 +26,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "squizlabs/php_codesniffer": "*",
-        "pdepend/pdepend": "*",
-        "phpmd/phpmd": "*",
-        "phpunit/php-invoker": "*"
+        "phpunit/php-invoker": "*",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-0": {
