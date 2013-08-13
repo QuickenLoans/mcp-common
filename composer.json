@@ -2,6 +2,7 @@
     "name": "ql/mcp-core",
     "description": "Provides various 'data type' style classes: GUID, HttpUrl, IPv4Address, USAddress, and date/time related functionality.",
     "license": "proprietary",
+    "homepage": "http://git/mnagi/mcp-core",
     "authors": [
         {
             "name": "Matt Nagi",
