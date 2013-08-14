@@ -32,7 +32,8 @@
     },
     "autoload": {
         "psr-0": {
-            "MCP": "src"
+            "MCP\\DataType\\": "src",
+            "MCP\\IO\\": "src"
         }
     }
 }
