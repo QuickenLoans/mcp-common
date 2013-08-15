@@ -35,5 +35,8 @@
             "MCP\\DataType\\": "src",
             "MCP\\IO\\": "src"
         }
+    },
+    "archive": {
+        "exclude": ["/bin", "/tests", "/pakefile", "/phpunit.xml.dist"]
     }
 }
