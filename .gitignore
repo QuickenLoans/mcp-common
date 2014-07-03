@@ -1,4 +1,4 @@
 /vendor/
-/.idea/
 /phpunit.xml
+/composer.lock
 /build/

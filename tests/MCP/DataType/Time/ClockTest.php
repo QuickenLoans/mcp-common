@@ -24,7 +24,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $expected = '2011-11-05 05:02:42';
         $clock = new Clock($time, $tz);
         $timePoint = $clock->read();
-        $actual = $timePoint->format('Y-m-d H:i:s', 'EST');
+        $actual = $timePoint->format('Y-m-d H:i:s', 'America/Detroit');
         $this->assertSame($expected, $actual);
     }
 

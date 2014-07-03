@@ -2,19 +2,19 @@
     "name": "ql/mcp-core",
     "description": "Provides various 'data type' style classes: GUID, HttpUrl, IPv4Address, USAddress, and date/time related functionality.",
     "license": "proprietary",
-    "homepage": "http://git/mnagi/mcp-core",
+    "homepage": "http://git/mcp/mcp-core",
     "authors": [
         {
             "name": "Matt Nagi",
             "email": "mattnagi@quickenloans.com",
             "role": "Tech Lead",
-            "homepage": "http://rwprofile/MySite/Public.aspx?accountname=MI%5cMNagi"
+            "homepage": "http://quniverse/profiles/Person.aspx?accountname=MI%5cMNagi"
         }
     ],
     "support": {
         "email": "mattnagi@quickenloans.com",
-        "issues": "http://git/mnagi/mcp-core/issues",
-        "source": "http://git/mnagi/mcp-core"
+        "issues": "http://git/mcp/mcp-core/issues",
+        "source": "http://git/mcp/mcp-core"
     },
     "require": {
         "php": ">=5.4.0",
@@ -28,14 +28,16 @@
     "require-dev": {
         "phpunit/phpunit": "*",
         "phpunit/php-invoker": "*",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "pdepend/pdepend": "*",
+        "phpmd/phpmd": "*"
     },
     "autoload": {
-        "psr-0": {
-            "MCP\\DataType\\": "src"
+        "psr-4": {
+            "MCP\\": "src\\"
         }
     },
     "archive": {
-        "exclude": ["/bin", "/tests", "/pakefile", "/phpunit.xml.dist"]
+        "exclude": ["/tests", "/phpunit.xml.dist"]
     }
 }
