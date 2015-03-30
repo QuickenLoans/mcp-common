@@ -42,6 +42,35 @@ class HttpUrl
     private $query;
 
     /**
+     * @param boolean|null $secure
+     * @param string|null $host
+     * @param int|null $port
+     * @param array $path
+     * @param array|null $query
+     */
+    private function __construct(
+        $secure = null,
+        $host = null,
+        $port = null,
+        array $path = array(),
+        array $query = null
+    ) {
+        $this->secure = $secure;
+        $this->host = $host;
+        $this->port = $port;
+        $this->path = $path;
+        $this->query = $query;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->asString();
+    }
+
+    /**
      * Creates a new HttpUrl instance
      *
      * This is the method used parse and operate on a URL defined by RFC 2396.
@@ -72,13 +101,13 @@ class HttpUrl
         }
 
         $scheme = isset($bits['scheme']) ? $bits['scheme'] : null;
-        $secure = self::determineSecurity($scheme, $hack);
+        $secure = static::determineSecurity($scheme, $hack);
 
         if ($secure === 0) {
             return null;
         }
 
-        $res = self::handleHostPort($bits);
+        $res = static::handleHostPort($bits);
         if (null == $res) {
             return null;
         }
@@ -88,113 +117,14 @@ class HttpUrl
             return null;
         }
 
-        $path = self::handlePath($bits, $host);
+        $path = static::handlePath($bits, $host);
         if (null == $path) {
             return null;
         }
 
-        $query = self::handleQuery($bits, $url);
+        $query = static::handleQuery($bits, $url);
 
-        return new self($secure, $host, $port, $path, $query);
-    }
-
-    /**
-     * @param $scheme
-     * @param $hack
-     * @return bool|int|null
-     */
-    private static function determineSecurity($scheme, $hack)
-    {
-        if ($scheme === 'https') {
-            $secure = true;
-
-            return $secure;
-        } elseif (true === $hack) {
-            $secure = null;
-
-            return $secure;
-        } elseif ($scheme === 'http') {
-            $secure = false;
-
-            return $secure;
-        } elseif (null === $scheme) {
-            $secure = null;
-
-            return $secure;
-        } else {
-            $secure = 0;
-
-            return $secure;
-        }
-    }
-
-
-    /**
-     * @param string[] $bits
-     * @return array|null
-     */
-    private static function handleHostPort(array $bits)
-    {
-        $host = isset($bits['host']) ? $bits['host'] : null;
-        if (!preg_match('@^([A-Za-z0-9-]+\.?)*$@', $host)) {
-            return null;
-        }
-
-        $port = isset($bits['port']) ? $bits['port'] : null;
-        if ($host && null === $port) {
-            $port = 80;
-        } elseif (null === $host) {
-            $port = null;
-        } else {
-            $port = (int) $port;
-        }
-
-        return array($host, $port);
-    }
-
-    /**
-     * @param array $bits
-     * @param string|null $host
-     * @return string[]|null
-     */
-    private static function handlePath(array $bits, $host)
-    {
-        $path = isset($bits['path']) ? $bits['path'] : null;
-        if (null === $path && $host) {
-            $path = array('', '');
-        } elseif (null === $path && !$host) {
-            return null;
-        } else {
-            $path = explode('/', $bits['path']);
-        }
-        if ($path[0] !== '') {
-            return null;
-        }
-        foreach ($path as &$pathSegment) {
-            if (!preg_match('@^([A-Za-z0-9_.!~*\'();:\@&=+$,-]|%[A-Fa-f0-9]{2})*$@', $pathSegment)) {
-                return null;
-            }
-            $pathSegment = rawurldecode($pathSegment);
-        }
-        return $path;
-    }
-
-    /**
-     * @param array $bits
-     * @param string $url
-     * @return string[]|null
-     */
-    private static function handleQuery(array $bits, $url)
-    {
-        $rawQuery = isset($bits['query']) ? $bits['query'] : null;
-        $query = null;
-        if ($rawQuery) {
-            parse_str($rawQuery, $query);
-        }
-        if (null === $query && substr($url, -1) === '?') {
-            $query = array();
-        }
-        return $query;
+        return new static($secure, $host, $port, $path, $query);
     }
 
     /**
@@ -322,25 +252,101 @@ class HttpUrl
         }
         return implode('&', $ret);
     }
+    /**
+     * @param $scheme
+     * @param $hack
+     * @return bool|int|null
+     */
+    private static function determineSecurity($scheme, $hack)
+    {
+        if ($scheme === 'https') {
+            $secure = true;
+
+            return $secure;
+        } elseif (true === $hack) {
+            $secure = null;
+
+            return $secure;
+        } elseif ($scheme === 'http') {
+            $secure = false;
+
+            return $secure;
+        } elseif (null === $scheme) {
+            $secure = null;
+
+            return $secure;
+        } else {
+            $secure = 0;
+
+            return $secure;
+        }
+    }
 
     /**
-     * @param boolean|null $secure
-     * @param string|null $host
-     * @param int|null $port
-     * @param array $path
-     * @param array|null $query
+     * @param string[] $bits
+     * @return array|null
      */
-    private function __construct(
-        $secure = null,
-        $host = null,
-        $port = null,
-        array $path = array(),
-        array $query = null
-    ) {
-        $this->secure = $secure;
-        $this->host = $host;
-        $this->port = $port;
-        $this->path = $path;
-        $this->query = $query;
+    private static function handleHostPort(array $bits)
+    {
+        $host = isset($bits['host']) ? $bits['host'] : null;
+        if (!preg_match('@^([A-Za-z0-9-]+\.?)*$@', $host)) {
+            return null;
+        }
+
+        $port = isset($bits['port']) ? $bits['port'] : null;
+        if ($host && null === $port) {
+            $port = 80;
+        } elseif (null === $host) {
+            $port = null;
+        } else {
+            $port = (int) $port;
+        }
+
+        return array($host, $port);
+    }
+
+    /**
+     * @param array $bits
+     * @param string|null $host
+     * @return string[]|null
+     */
+    private static function handlePath(array $bits, $host)
+    {
+        $path = isset($bits['path']) ? $bits['path'] : null;
+        if (null === $path && $host) {
+            $path = array('', '');
+        } elseif (null === $path && !$host) {
+            return null;
+        } else {
+            $path = explode('/', $bits['path']);
+        }
+        if ($path[0] !== '') {
+            return null;
+        }
+        foreach ($path as &$pathSegment) {
+            if (!preg_match('@^([A-Za-z0-9_.!~*\'();:\@&=+$,-]|%[A-Fa-f0-9]{2})*$@', $pathSegment)) {
+                return null;
+            }
+            $pathSegment = rawurldecode($pathSegment);
+        }
+        return $path;
+    }
+
+    /**
+     * @param array $bits
+     * @param string $url
+     * @return string[]|null
+     */
+    private static function handleQuery(array $bits, $url)
+    {
+        $rawQuery = isset($bits['query']) ? $bits['query'] : null;
+        $query = null;
+        if ($rawQuery) {
+            parse_str($rawQuery, $query);
+        }
+        if (null === $query && substr($url, -1) === '?') {
+            $query = array();
+        }
+        return $query;
     }
 }

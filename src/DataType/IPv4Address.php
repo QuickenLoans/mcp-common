@@ -45,7 +45,7 @@ class IPv4Address
      */
     public static function __set_state(array $data)
     {
-        $obj = new self(0);
+        $obj = new static(0);
         $obj->address = $data['address'];
         return $obj;
     }
@@ -73,7 +73,7 @@ class IPv4Address
             // dns resolution failure
             return null;
         }
-        return self::create($resolved, $hostName);
+        return static::create($resolved, $hostName);
     }
 
     /**
@@ -87,7 +87,7 @@ class IPv4Address
         if (false === $ip) {
             return null;
         }
-        return new self($ip, $originalHost);
+        return new static($ip, $originalHost);
     }
 
     /**
@@ -113,6 +113,14 @@ class IPv4Address
         } else {
             $this->originalHost = $this->asString();
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->asString();
     }
 
     /**
