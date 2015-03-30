@@ -50,15 +50,15 @@ class GUID
      */
     public static function createFromHex($hexString)
     {
-        $hexString = str_replace(self::$searchChars, self::$replaceChars, $hexString);
+        $hexString = str_replace(static::$searchChars, static::$replaceChars, $hexString);
         if (!preg_match('/^[0-9A-Fa-f]{32}$/', $hexString)) {
             return null;
         }
         $bin = pack('H*', $hexString);
-        if (!self::validate($bin)) {
+        if (!static::validate($bin)) {
             return null;
         }
-        return new self($bin);
+        return new static($bin);
     }
 
     /**
@@ -71,10 +71,10 @@ class GUID
         if (false === $bin) {
             return null;
         }
-        if (!self::validate($bin)) {
+        if (!static::validate($bin)) {
             return null;
         }
-        return new self($bin);
+        return new static($bin);
     }
 
     /**
@@ -83,10 +83,10 @@ class GUID
      */
     public static function createFromBin($binString)
     {
-        if (!self::validate($binString)) {
+        if (!static::validate($binString)) {
             return null;
         }
-        return new self($binString);
+        return new static($binString);
     }
 
     /**
@@ -107,7 +107,7 @@ class GUID
             mt_rand(0x0000, 0xFFFF),
             mt_rand(0x0000, 0xFFFF)
         );
-        return new self($guid);
+        return new static($guid);
     }
 
     /**
