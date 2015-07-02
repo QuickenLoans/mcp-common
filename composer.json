@@ -6,38 +6,28 @@
     "authors": [
         {
             "name": "Matt Nagi",
-            "email": "mattnagi@quickenloans.com",
-            "role": "Tech Lead",
-            "homepage": "http://quniverse/profiles/Person.aspx?accountname=MI%5cMNagi"
+            "email": "mattnagi@quickenloans.com"
         }
     ],
-    "support": {
-        "email": "mattnagi@quickenloans.com",
-        "issues": "http://git/mcp/mcp-core/issues",
-        "source": "http://git/mcp/mcp-core"
+    "autoload": {
+        "psr-4": { "MCP\\": "src\\"}
     },
+    "archive": {
+        "exclude": ["/tests", "/phpunit.xml.dist"]
+    },
+
+    "conflict": {
+        "ql/mcp": "*"
+    },
+
     "require": {
         "php": ">=5.4.0",
         "ext-date": "*",
         "ext-pcre": "*",
         "ext-SPL": "*"
     },
-    "conflict": {
-        "ql/mcp": "*"
-    },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "phpunit/php-invoker": "*",
-        "squizlabs/php_codesniffer": "*",
-        "pdepend/pdepend": "*",
-        "phpmd/phpmd": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "MCP\\": "src\\"
-        }
-    },
-    "archive": {
-        "exclude": ["/tests", "/phpunit.xml.dist"]
+        "phpunit/php-invoker": "*"
     }
 }
