@@ -59,7 +59,6 @@ class ClockTest extends PHPUnit_Framework_TestCase
     {
         ini_set('date.timezone', 'America/Detroit');
 
-
         $expected = new TimePoint(2001, 3, 30, 0, 0, 0, 'America/Detroit');
         $clock = new Clock('2001-03-30 00:00:00');
         $actual = $clock->read();
