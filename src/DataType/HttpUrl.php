@@ -89,6 +89,10 @@ class HttpUrl
      */
     public static function create($url)
     {
+        if (strlen($url) === 0) {
+            return null;
+        }
+
         $hack = false;
         if ($url[0] === '/' && $url[1] === '/') {
             $url = 'http:' . $url;
