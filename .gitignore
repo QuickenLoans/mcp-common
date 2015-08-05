@@ -1,4 +1,4 @@
-/.phpunit/
+/phpunit
 /phpunit.xml
 
 /vendor/
