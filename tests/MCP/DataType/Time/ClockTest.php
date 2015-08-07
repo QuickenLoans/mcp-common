@@ -122,6 +122,12 @@ class ClockTest extends PHPUnit_Framework_TestCase
                 null,
                 '30 minutes',
                 false
+            ],
+            [
+                new TimePoint('2015', '10', '30', '10', '20', '00', 'UTC'),
+                new TimePoint('2015', '10', '10', '10', '10', '00', 'UTC'),
+                null,
+                false
             ]
         ];
     }
