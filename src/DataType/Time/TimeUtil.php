@@ -7,12 +7,16 @@
 
 namespace MCP\DataType\Time;
 
+use Exception;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
 
 /**
  * Shared code for time classes
+ *
+ * Do not use this trait in your code! It is an implementation detail of this library and may change without notice.
+ * If you need functionality provided here, use the Clock instead.
  *
  * @internal
  */
@@ -33,30 +37,79 @@ trait TimeUtil
     }
 
     /**
+     * Convert a formatted string to a TimePoint
+     *
+     * Either set the format manually using the date() compatible format parameter, or this method will attempt to
+     * parse the input string using the following supported formats.
+     *
+     *  - UTC Indicator (Y-m-d\TH:i:s\Z, example 2015-12-15T10:10:00Z)
+     *  - RFC 3339 (Y-m-d\TH:i:sP, example 2015-12-15T10:10:00+00:00)
+     *  - RFC 3339 with fractional seconds (Y-m-d\TH:i:s.uP, example 2015-12-15T10:10:10.000000+00:00)
+     *  - ISO 8601 (Y-m-d\TH:i:sO, example 2015-12-15T10:10:00+0000)
+     *  - ISO 8601 with fractional seconds and period (Y-m-d\TH:i:s.uO, example 2015-12-15T10:10:00.000000+0000)
+     *  - ISO 8601 with fractional seconds and comma (Y-m-d\TH:i:s,uO, example 2015-12-15T10:10:00.000000+0000)
+     *  - ISO 8601 with no seconds (Y-m-d\TH:iO, example 2015-12-15T10:10:00+0000)
+     *
+     * @param string $input
+     * @param string $format
+     * @return TimePoint|false
+     */
+    private function stringToTimePoint($input, $format = null)
+    {
+        if ($format === null) {
+
+            $formats = [
+                'Y-m-d\TH:i:sP',        // RFC 3339
+                'Y-m-d\TH:i:s.uP',      // RFC 3339 with fractional seconds (lost precision)
+                'Y-m-d\TH:i:sO',        // ISO 8601
+                'Y-m-d\TH:i:s.uO',      // ISO 8601 with fractional seconds and period (lost precision)
+                'Y-m-d\TH:i:s,uO',      // ISO 8601 with fractional seconds and comma (lost precision)
+                'Y-m-d\TH:iO',          // ISO 8601 with no seconds
+            ];
+
+            do {
+                $datetime = DateTime::createFromFormat(array_shift($formats), $input);
+            } while (!$datetime instanceof DateTime && count($formats) > 0);
+
+        } else {
+            $datetime = DateTime::createFromFormat($format, $input);
+        }
+
+        return ($datetime instanceof DateTime) ? $this->dateTimeToTimePoint($datetime) : false;
+    }
+
+    /**
+     * Convert a DateTime to a TimePoint
+     *
+     * Note that, if the DateTime includes fractional seconds, that precision will be lost as the TimePoint object
+     * does not support the inclusion of fractional seconds.
+     *
      * @param DateTime $date
      * @return TimePoint
      */
     private function dateTimeToTimePoint(DateTime $date)
     {
-        $parserFormat = '@^(\d+)-(\d+)-(\d+)-(\d+)-(\d+)-(\d+)$@';
-        $parsableFormat = 'Y-n-j-G-i-s';
-        preg_match($parserFormat, $date->format($parsableFormat), $t);
-        $t[5] = ltrim($t[5], '0');
-        $t[6] = ltrim($t[6], '0');
-        $t[1] = (int) $t[1];
-        $t[2] = (int) $t[2];
-        $t[3] = (int) $t[3];
-        $t[4] = (int) $t[4];
-        $t[5] = (int) $t[5];
-        $t[6] = (int) $t[6];
+        // missing or offset only timezone? correct to UTC
+        if (!$date->getTimezone() instanceof DateTimeZone || preg_match('#^[+-]{1}[0-9]{2}:?[0-9]{2}$#', $date->getTimezone()->getName())) {
+            $date->setTimezone(new DateTimeZone('UTC'));
+        }
+
+        try {
+            $timezone = new DateTimeZone($date->getTimezone()->getName());
+        } catch (Exception $e) {
+            // catch any remaining invalid timezone cases (this "should never" happen)
+            // @codeCoverageIgnoreStart
+            $date->setTimezone(new DateTimeZone('UTC'));
+            // @codeCoverageIgnoreEnd
+        }
 
         return new TimePoint(
-            $t[1],
-            $t[2],
-            $t[3],
-            $t[4],
-            $t[5],
-            $t[6],
+            $date->format('Y'),
+            $date->format('m'),
+            $date->format('d'),
+            $date->format('H'),
+            $date->format('i'),
+            $date->format('s'),
             $date->getTimezone()->getName()
         );
     }

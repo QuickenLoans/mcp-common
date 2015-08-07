@@ -23,6 +23,8 @@ class Clock
 {
     use TimeUtil;
 
+    const ERR_FORMAT = 'Unable to parse malformed string %s to TimePoint.';
+
     /**
      * @var string
      */
@@ -46,6 +48,8 @@ class Clock
     }
 
     /**
+     * Get the current TimePoint
+     *
      * @return TimePoint
      * @throws Exception
      */
@@ -68,5 +72,72 @@ class Clock
         }
 
         return $this->dateTimeToTimePoint($curTime);
+    }
+
+    /**
+     * Get a TimePoint from a DateTime object
+     *
+     * Note that, if the DateTime contains fractional seconds, that precision will be lost as the TimePoint object
+     * does not currently support fractional seconds.
+     *
+     * @param DateTime $datetime
+     * @return TimePoint
+     */
+    public function fromDateTime(DateTime $datetime)
+    {
+        return $this->dateTimeToTimePoint($datetime);
+    }
+
+    /**
+     * Get a TimePoint from a formatted string
+     *
+     * The format parameter should be a date() compatible string. If it is not provided this method will attempt to
+     * parse in input with one of the following supported formats.
+     *
+     *  - UTC Implied (2015-12-10T10:10:00Z)
+     *  - RFC 3339 (2015-12-10T10:10:00+04:00, 2015-12-10T10:10:00.000000+04:00)
+     *  - ISO 8601 (2015-12-10T10:10:00+0000, 2015-12-10T10:10:00.000000+0000, 2015-12-10T10:10:00,000000+0000, etc)
+     *
+     * @param string $input
+     * @param string|null $format
+     * @return TimePoint
+     * @throws Exception
+     */
+    public function fromString($input, $format = null)
+    {
+        $result = $this->stringToTimePoint($input, $format);
+
+        if ($result instanceof TimePoint) {
+            return $result;
+        }
+
+        throw new Exception(sprintf(self::ERR_FORMAT, $input));
+    }
+
+    /**
+     * Check that the current time is within a specified range
+     *
+     * Optionally, a strtotime() compatible skew modifier may be provided. This modifier allows for a certain amount
+     * of clock skew between systems when performing the range check.
+     *
+     * @param TimePoint $expiration
+     * @param TimePoint|null $creation
+     * @param string|null $skew
+     * @return bool
+     * @throws Exception
+     */
+    public function inRange(TimePoint $expiration, TimePoint $creation = null, $skew = null)
+    {
+        $now = $this->read();
+
+        if ($skew !== null) {
+            if ($creation instanceof TimePoint) {
+                $creation = $creation->modify(sprintf('-%s', $skew));
+            }
+
+            $expiration = $expiration->modify(sprintf('+%s', $skew));
+        }
+
+        return $now->compare($expiration) !== 1 && (!$creation instanceof TimePoint || $now->compare($creation) !== -1);
     }
 }

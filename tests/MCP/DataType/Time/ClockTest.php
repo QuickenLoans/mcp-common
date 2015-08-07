@@ -7,6 +7,7 @@
 
 namespace MCP\DataType\Time;
 
+use DateTime;
 use PHPUnit_Framework_TestCase;
 
 class ClockTest extends PHPUnit_Framework_TestCase
@@ -63,5 +64,100 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $clock = new Clock('2001-03-30 00:00:00');
         $actual = $clock->read();
         $this->assertSame($expected->compare($actual), 0);
+    }
+
+    /**
+     * @dataProvider inRangeData
+     */
+    public function testInRange(TimePoint $expiration, TimePoint $creation = null, $skew = null, $expected)
+    {
+        $clock = new Clock('2015-10-10 10:00:00', 'UTC');
+
+        $this->assertEquals($expected, $clock->inRange($expiration, $creation, $skew));
+    }
+
+    public function inRangeData()
+    {
+        return [
+            // in range
+            [
+                new TimePoint('2015', '10', '30', '10', '10', '00', 'UTC'),
+                null,
+                null,
+                true
+            ],
+            [
+                new TimePoint('2015', '10', '30', '10', '10', '00', 'UTC'),
+                new TimePoint('2015', '10', '10', '8', '00', '00', 'UTC'),
+                null,
+                true
+            ],
+            [
+                new TimePoint('2015', '10', '30', '10', '10', '00', 'UTC'),
+                new TimePoint('2015', '10', '10', '10', '10', '00', 'UTC'),
+                '30 minutes',
+                true
+            ],
+            [
+                new TimePoint('2015', '10', '10', '12', '00', '00', 'EST'),
+                null,
+                null,
+                true
+            ],
+            [
+                new TimePoint('2015', '10', '10', '09', '50', '00', 'UTC'),
+                null,
+                '30 minutes',
+                true
+            ],
+            // out of range
+            [
+                new TimePoint('2015', '10', '9', '10', '10', '00', 'UTC'),
+                null,
+                null,
+                false
+            ],
+            [
+                new TimePoint('2015', '10', '10', '09', '20', '00', 'UTC'),
+                null,
+                '30 minutes',
+                false
+            ]
+        ];
+    }
+
+    /**
+     * Testing of conversion logic in Time Util Test
+     */
+    public function testFromString()
+    {
+        $clock = new Clock();
+        $output = $clock->fromString('2015-10-10T10:10:00Z');
+
+        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+    }
+
+    /**
+     * Testing of conversion logic in Time Util Test
+     *
+     * @expectedException Exception
+     */
+    public function testFromStringFailure()
+    {
+        $clock = new Clock();
+        $output = $clock->fromString('2015-10-10T10:10:00');
+
+        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+    }
+
+    /**
+     * Testing of conversion logic in Time Util Test
+     */
+    public function testFromDateTime()
+    {
+        $clock = new Clock();
+        $output = $clock->fromDateTime(new DateTime());
+
+        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
     }
 }
