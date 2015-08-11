@@ -209,4 +209,13 @@ class TimePointTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+    public function testJsonSerialize()
+    {
+        $timepoint = new TimePoint(2015, 10, 10, 10, 10, 00, 'UTC');
+        $output = json_encode($timepoint);
+
+        $this->assertEquals('"2015-10-10T10:10:00Z"', $output);
+        $this->assertEquals('2015-10-10T10:10:00Z', json_decode($output, true));
+    }
 }

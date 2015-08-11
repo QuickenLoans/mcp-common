@@ -10,12 +10,13 @@ namespace MCP\DataType\Time;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use JsonSerializable;
 use Exception as BaseException;
 
 /**
  * @api
  */
-class TimePoint
+class TimePoint implements JsonSerializable
 {
     use TimeUtil;
 
@@ -47,6 +48,14 @@ class TimePoint
 
         $this->date = $date;
         $this->date->setTimeZone(new DateTimeZone('UTC'));
+    }
+
+    /**
+     * Serialize as a RFC 3339 UTC timezone JSON string
+     */
+    public function jsonSerialize()
+    {
+        return $this->format('Y-m-d\TH:i:s\Z', 'UTC');
     }
 
     /**
