@@ -53,9 +53,11 @@ trait TimeUtil
         }
 
         try {
+            // DateTime::createFromFormat() will create an invalid DateTimeZone object when the timezone is an offset
+            // (-05:00, for example) instead of a named timezone. By recreating the DateTimeZone object, we can expose
+            // this problem and ensure that a valid DateTimeZone object is always set.
             $timezone = new DateTimeZone($date->getTimezone()->getName());
         } catch (Exception $e) {
-            // catch any remaining invalid timezone cases (this "should never" happen)
             // @codeCoverageIgnoreStart
             $date->setTimezone(new DateTimeZone('UTC'));
             // @codeCoverageIgnoreEnd
