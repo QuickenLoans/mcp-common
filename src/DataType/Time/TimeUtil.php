@@ -37,48 +37,6 @@ trait TimeUtil
     }
 
     /**
-     * Convert a formatted string to a TimePoint
-     *
-     * Either set the format manually using the date() compatible format parameter, or this method will attempt to
-     * parse the input string using the following supported formats.
-     *
-     *  - UTC Indicator (Y-m-d\TH:i:s\Z, example 2015-12-15T10:10:00Z)
-     *  - RFC 3339 (Y-m-d\TH:i:sP, example 2015-12-15T10:10:00+00:00)
-     *  - RFC 3339 with fractional seconds (Y-m-d\TH:i:s.uP, example 2015-12-15T10:10:10.000000+00:00)
-     *  - ISO 8601 (Y-m-d\TH:i:sO, example 2015-12-15T10:10:00+0000)
-     *  - ISO 8601 with fractional seconds and period (Y-m-d\TH:i:s.uO, example 2015-12-15T10:10:00.000000+0000)
-     *  - ISO 8601 with fractional seconds and comma (Y-m-d\TH:i:s,uO, example 2015-12-15T10:10:00.000000+0000)
-     *  - ISO 8601 with no seconds (Y-m-d\TH:iO, example 2015-12-15T10:10:00+0000)
-     *
-     * @param string $input
-     * @param string $format
-     * @return TimePoint|false
-     */
-    private function stringToTimePoint($input, $format = null)
-    {
-        if ($format === null) {
-
-            $formats = [
-                'Y-m-d\TH:i:sP',        // RFC 3339
-                'Y-m-d\TH:i:s.uP',      // RFC 3339 with fractional seconds (lost precision)
-                'Y-m-d\TH:i:sO',        // ISO 8601
-                'Y-m-d\TH:i:s.uO',      // ISO 8601 with fractional seconds and period (lost precision)
-                'Y-m-d\TH:i:s,uO',      // ISO 8601 with fractional seconds and comma (lost precision)
-                'Y-m-d\TH:iO',          // ISO 8601 with no seconds
-            ];
-
-            do {
-                $datetime = DateTime::createFromFormat(array_shift($formats), $input);
-            } while (!$datetime instanceof DateTime && count($formats) > 0);
-
-        } else {
-            $datetime = DateTime::createFromFormat($format, $input);
-        }
-
-        return ($datetime instanceof DateTime) ? $this->dateTimeToTimePoint($datetime) : false;
-    }
-
-    /**
      * Convert a DateTime to a TimePoint
      *
      * Note that, if the DateTime includes fractional seconds, that precision will be lost as the TimePoint object

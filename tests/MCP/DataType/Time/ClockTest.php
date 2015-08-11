@@ -33,11 +33,11 @@ class ClockTest extends PHPUnit_Framework_TestCase
      * @group DataType
      * @group Time
      * @covers MCP\DataType\Time\Clock<extended>
+     * @expectedException \MCP\DataType\Time\Exception
      */
-    public function testInvalidTimeArgumentThrowsException()
+    public function testConstructorInvalidTimeArgumentReturnsNull()
     {
-        $this->setExpectedException('\MCP\DataType\Time\Exception');
-        new Clock('asdf', 'UTC');
+        $clock = new Clock('asdf', 'UTC');
     }
 
     /**
@@ -135,35 +135,92 @@ class ClockTest extends PHPUnit_Framework_TestCase
     /**
      * Testing of conversion logic in Time Util Test
      */
-    public function testFromString()
-    {
-        $clock = new Clock();
-        $output = $clock->fromString('2015-10-10T10:10:00Z');
-
-        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
-    }
-
-    /**
-     * Testing of conversion logic in Time Util Test
-     *
-     * @expectedException Exception
-     */
-    public function testFromStringFailure()
-    {
-        $clock = new Clock();
-        $output = $clock->fromString('2015-10-10T10:10:00');
-
-        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
-    }
-
-    /**
-     * Testing of conversion logic in Time Util Test
-     */
     public function testFromDateTime()
     {
         $clock = new Clock();
         $output = $clock->fromDateTime(new DateTime());
 
         $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+    }
+
+    /**
+     * @dataProvider fromStringData
+     */
+    public function testFromString($input, $expected)
+    {
+        $clock = new Clock();
+        $output = $clock->fromString($input);
+
+        if (is_string($expected)) {
+            $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+            $this->assertEquals($expected, $output->format('Y-m-d H:i:s.u e', 'UTC'));
+        } else {
+            $this->assertEquals($expected, $output);
+        }
+    }
+
+    public function fromStringData()
+    {
+        return [
+            // simple UTC implied
+            [
+                '2015-12-15T10:10:00Z',
+                '2015-12-15 10:10:00.000000 UTC'
+            ],
+            // loss of fractional second precision
+            [
+                '2015-12-15T10:10:00.500000Z',
+                '2015-12-15 10:10:00.000000 UTC'
+            ],
+            // iso 8601 no seconds
+            [
+                '2015-12-15T10:10UTC',
+                '2015-12-15 10:10:00.000000 UTC'
+            ],
+            // offset to UTC
+            [
+                '2015-12-15T10:10:00-04:00',
+                '2015-12-15 14:10:00.000000 UTC'
+            ],
+            // invalid, no timezone
+            [
+                '2015-12-15T10:10:00',
+                null
+            ],
+            // invalid, no time
+            [
+                '2015-12-15',
+                null
+            ],
+            // invalid, bad timezone
+            [
+                '2015-12-15T10:10:00BUTT',
+                null
+            ]
+        ];
+    }
+
+    public function testFromStringNoTimezoneToDefault()
+    {
+        $clock = new Clock('now', 'UTC');
+
+        $input = '2015-12-15T10:10:00';
+        $expected = '2015-12-15 10:10:00.000000 UTC';
+        $output = $clock->fromString($input, 'Y-m-d\TH:i:s');
+
+        $this->assertEquals($expected, $output->format('Y-m-d H:i:s.u e', 'UTC'));
+    }
+
+    public function testFromStringManualFormat()
+    {
+        $format = 'Y-m-d\TH:i:sP';
+        $input = '2015-12-10T10:10:00Z';
+        $expected = '2015-12-10 10:10:00.000000 UTC';
+
+        $clock = new Clock();
+        $output = $clock->fromString($input, $format);
+
+        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+        $this->assertEquals($expected, $output->format('Y-m-d H:i:s.u e', 'UTC'));
     }
 }
