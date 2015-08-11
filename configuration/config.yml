@@ -1,0 +1,16 @@
+parameters:
+
+    # Clock Current Time
+    mcp.core.clock.time: 'now'
+
+    # Clock Timezone
+    mcp.core.clock.timezone: null
+
+services:
+
+    # Clock
+    mcp.core.clock:
+        class: 'MCP\DataType\Time\Clock'
+        arguments:
+            - %mcp.core.clock.time%
+            - %mcp.core.clock.timezone%
