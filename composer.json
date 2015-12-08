@@ -32,6 +32,13 @@
 
     "require-dev": {
         "phpunit/phpunit": "~4.5",
-        "phpunit/php-invoker": "*"
+        "phpunit/php-invoker": "*",
+
+        "paragonie/random_compat": "~1.1",
+        "psr/log": "*"
+    },
+
+    "suggest": {
+        "paragonie/random_compat": "~1.1 or PHP7 are required for GUID and OpaqueProperty"
     }
 }

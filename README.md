@@ -1,6 +1,6 @@
 # MCP Common
 
-This package provides common code that is used by most other MCP or Quicken Loans PHP packages.
+This package provides common code, utilities, and data types used by most other MCP or Quicken Loans PHP packages.
 
 ## Installation
 
@@ -8,18 +8,19 @@ This package provides common code that is used by most other MCP or Quicken Loan
 composer require mcp-common ~1.0
 ```
 
-## Classes
+## Table of Contents
 
-- GUID
-- IPv4Address
-- USAddress
+- [GUID](#guid)
+- [IPv4Address](#ipv4address)
+- [USAddress](#usaddress)
+- [OpaqueProperty](#opaqueProperty)
 - **Time**
-    - Clock
-    - TimePoint
-    - TimeInterval
-    - TimePeriod
+    - [Clock](#clock)
+    - [TimePoint](#timepoint)
+    - [TimeInterval](#timeinterval)
+    - [TimePeriod](#timeperiod)
 - **Utility**
-    - ByteString
+    - [ByteString](#bytestring)
 
 ### GUID
 
@@ -248,6 +249,23 @@ The output of the above code is as follows:
 ```
 
 Note that `$period0` and `$period1` are copies of the same time period, just constructed differently.
+
+### OpaqueProperty
+
+Opaque Property is used to obscure secrets while in memory. This is useful to protect sensitive values from debug
+output such as stacktraces or mistaken `echo` or `var_dump` commands.
+
+```php
+use QL\MCP\Common\OpaqueProperty;
+
+$secret = new OpaqueProperty('my_secret_token');
+
+echo $secret;
+// [opaque property]
+
+echo $secret->getValue();
+// "my_secret_token"
+```
 
 ### ByteString
 
