@@ -14,7 +14,48 @@ use JsonSerializable;
 use Exception as BaseException;
 
 /**
- * @api
+ * A point in time.
+ *
+ * This is used to represent a datetime with the following caveats:
+ *
+ * - Immutable
+ * - When output, users must be explicit about which timezone to use.
+ *
+ * Usage:
+ *
+ * ```php
+ * use MCP\Common\Time\TimeInterval;
+ * use MCP\Common\Time\TimePoint;
+ *
+ * $time = new TimePoint(1999, 3, 31, 18, 15, 0, 'America/Detroit');
+ *
+ * // returns a -1, 0 or 1 if $time is less than, equal to or greater than the argument respectively.
+ * $time->compare(new TimePoint(1983, 12, 15, 21, 2, 0, 'America/Detroit'));
+ * // -1
+ *
+ * // the format string is exactly the same as DateTime->format(). Note the *required* timezone argument.
+ * $time->format('Y-m-d H:i:s', 'UTC');
+ * // '1999-03-31 23:15:00'
+ *
+ * // Note that $time did not change, a copy was created. TimePoint->modify() takes the same argument format as modify()
+ * $time2 = $time->modify('+1 day');
+ * $time2->format('Y-m-d H:i:s', 'America/Detroit');
+ * // '1999-04-01 18:15:00'
+ *
+ * $time3 = $time->add(new TimeInterval('P2D'))
+ * $time3->format('Y-m-d H:i:s', 'America/Detroit');
+ * // '1999-04-02 18:15:00'
+ *
+ * $time4 = $time->sub(new TimeInterval('P2D'))
+ * $time4->format('Y-m-d H:i:s', 'America/Detroit');
+ * // '1999-03-29 18:15:00'
+ *
+ * $time5 = $time->diff(new TimePoint(1983, 12, 15, 21, 2, 0, 'America/Detroit'))
+ * $time5->format('%y years, %m months, %d days, %h hours, %i minutes');
+ * // '15 years, 3 months, 15 days, 21 hours, 13 minutes'
+ * ```
+ *
+ * @see http://php.net/manual/en/class.datetime.php
  */
 class TimePoint implements JsonSerializable
 {
@@ -33,6 +74,7 @@ class TimePoint implements JsonSerializable
      * @param int $minute
      * @param int $second
      * @param string $timezone
+     *
      * @throws Exception
      */
     public function __construct($year, $month, $day, $hour, $minute, $second, $timezone)
@@ -57,12 +99,14 @@ class TimePoint implements JsonSerializable
      *
      * Example:
      *
-     * ```
+     * ```php
      * $time = new TimePoint(2015, 10, 30, 14, 30, 0, 'America/Detroit');
      * echo json_encode($time);
      *
      * "2015-10-30T18:30:00Z"
      * ```
+     *
+     * @return string
      */
     public function jsonSerialize()
     {

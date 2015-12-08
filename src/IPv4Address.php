@@ -21,7 +21,20 @@ use JsonSerializable;
  * along with the actual IP address. If you use the createFromHostString() factory for example, you will be able to
  * access the original host via the originalHost() method rather than having to store it elsewhere.
  *
- * @api
+ * Usage:
+ *
+ * ```php
+ * $ip = IPv4Address::create('192.168.0.101');
+ *
+ * echo $ip->asInt();
+ * // int(3232235621)
+ *
+ * echo $ip->asFloat();
+ * // double(3232235621)
+ *
+ * echo $ip->asString();
+ * // "192.168.0.101"
+ * ```
  */
 class IPv4Address implements JsonSerializable
 {
@@ -132,7 +145,7 @@ class IPv4Address implements JsonSerializable
      *
      * Example:
      *
-     * ```
+     * ```php
      * $ip = IPv4Address::create('192.168.0.101');
      * echo json_encode($ip);
      *

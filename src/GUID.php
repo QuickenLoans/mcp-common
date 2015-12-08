@@ -15,14 +15,16 @@ use JsonSerializable;
  * Note that a Microsoft .NET GUID is the same as an RFC 4122 UUID, standard
  * variant, 4th algorithm (see chapter 4.4 of the RFC for details).
  *
+ * Usage:
+ *
  * ```php
  * namespace MCP\Common;
  *
  * $guid = GUID::create();
- * echo $guid; // outputs something like {4577267B-AE54-4C03-8C86-E628D5D3695A}
- * ```
+ * echo $guid;
  *
- * @api
+ * // {4577267B-AE54-4C03-8C86-E628D5D3695A}
+ * ```
  */
 class GUID implements JsonSerializable
 {
@@ -175,7 +177,7 @@ class GUID implements JsonSerializable
      *
      * Example:
      *
-     * ```
+     * ```php
      * $guid = GUID::createFromHex('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7');
      * echo json_encode($guid);
      *

@@ -10,9 +10,24 @@ namespace MCP\Common;
 use JsonSerializable;
 
 /**
- * A US address
+ * A US address with the following properties:
+ * - Street 1
+ * - Street 2
+ * - City
+ * - State
+ * - Zip
  *
- * @api
+ * Usage:
+ *
+ * ```php
+ * $address = new USAddress('1 Campus Martius', '', 'Detroit', 'MI', '48226');
+ *
+ * echo $address->street1() . $address->street2();
+ * echo sprintf('%s, %s %d', $address->city(), $address->state(), $address->zip());
+ *
+ * // 1 Campus Martius
+ * // Detroit, MI 48226
+ * ```
  */
 class USAddress implements JsonSerializable
 {
@@ -62,7 +77,7 @@ class USAddress implements JsonSerializable
      *
      * Example:
      *
-     * ```
+     * ```php
      * $address = new USAddress('1 Campus Martius', '', 'Detroit', 'MI', '48226');
      * echo json_encode($address);
      *

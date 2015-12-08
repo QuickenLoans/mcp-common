@@ -13,6 +13,18 @@ use Exception as BaseException;
 
 /**
  * Abstract the system clock and provide TimePoint utility methods
+ *
+ * Usage:
+ *
+ * ```php
+ * use MCP\Common\Time\Clock;
+ *
+ * $clock = new Clock;
+ * $time = $clock->read();
+ *
+ * var_dump($time);
+ * // class MCP\Common\Time\TimePoint#1 {}
+ * ```
  */
 class Clock
 {
@@ -37,6 +49,7 @@ class Clock
      *
      * @param string $current
      * @param string|null $timezone
+     *
      * @throws Exception
      */
     public function __construct($current = 'now', $timezone = null)

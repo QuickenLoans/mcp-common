@@ -11,11 +11,24 @@ use DateInterval;
 use Exception as BaseException;
 
 /**
- * Represents a time interval such as '2 weeks'
+ * Represents a time interval such as "2 weeks".
  *
  * This wraps the DateInterval class for this namespace.
  *
- * @api
+ * Usage:
+ *
+ * ```php
+ * use MCP\Common\Time\TimeInterval;
+ *
+ * // The interval spec is the exact same as PHP's DateInterval
+ * $interval = new TimeInterval('P1M3DT7H');
+ *
+ * echo $interval->format("%d days %h hours\n");
+ *
+ * // "3 days 7 hours"
+ * ```
+ *
+ * @see http://php.net/manual/en/class.dateinterval.php
  */
 class TimeInterval
 {
