@@ -18,6 +18,8 @@ composer require mcp-common ~1.0
     - TimePoint
     - TimeInterval
     - TimePeriod
+- **Utility**
+    - ByteString
 
 ### GUID
 
@@ -25,7 +27,7 @@ This class represents a Microsoft .NET GUID. Note that a Microsoft .NET GUID is 
 standard variant, 4th algorithm (see chapter 4.4 of [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt) for details).
 
 ```php
-use MCP\Common\GUID;
+use QL\MCP\Common\GUID;
 
 $guid = GUID::create();
 echo $guid;
@@ -36,7 +38,7 @@ echo $guid;
 All of the following create calls create calls result in the *same GUID value*.
 
 ```php
-use MCP\Common\GUID;
+use QL\MCP\Common\GUID;
 
 $guid0 = GUID::createFromBin(base64_decode('T/l0arruT6OXO7O3QOOBKg=='));
 $guid1 = GUID::createFromHex('4FF9746ABAEE4FA3973BB3B740E3812A');
@@ -67,7 +69,7 @@ Represents an IPv4 address value.
 Assume for the sake of example that `www.example.com` resolves to the IP address `168.23.11.48`.
 
 ```php
-use MCP\Common\IPv4Address;
+use QL\MCP\Common\IPv4Address;
 
 $ipNoHost = IPv4Address::create('168.23.11.48');
 $ipWithHost = IPv4Address::createFromHostString('www.example.com');
@@ -90,7 +92,7 @@ Represents a US Address. This has no validation on it and is simply meant to mak
 address should be done by an external service.
 
 ```php
-use MCP\Common\USAddress;
+use QL\MCP\Common\USAddress;
 
 $addr = new USAddress('1 Campus Martius', '', 'Detroit', 'MI', '48226');
 
@@ -118,7 +120,7 @@ These Time classes were created before the creation of [DateTimeImmutable](http:
 Usage:
 
 ```php
-use MCP\Common\Time\Clock;
+use QL\MCP\Common\Time\Clock;
 
 $clock = new Clock;
 $currentTime = $clock->read();
@@ -130,7 +132,7 @@ If you want to see how a system operates at a specific **point in time**, the Cl
 than the system time or time zone. This is extremely useful for unit testing.
 
 ```php
-use MCP\Common\Time\Clock;
+use QL\MCP\Common\Time\Clock;
 
 // Set a clock up to December 15, 1983 at 9:02pm located in Detroit, MI
 $clock = new Clock('1983-12-15 21:02:00', 'America/Detroit');
@@ -152,8 +154,8 @@ this class are means to a very specific set of goals. These goals are as follows
 4. This class is immutable in that any modification type functions create a new copy of the modified state.
 
 ```php
-use MCP\Common\Time\TimeInterval;
-use MCP\Common\Time\TimePoint;
+use QL\MCP\Common\Time\TimeInterval;
+use QL\MCP\Common\Time\TimePoint;
 
 $time = new TimePoint(1999, 3, 31, 18, 15, 0, "America/Detroit");
 
@@ -191,7 +193,7 @@ Please see [DateInterval::__construct](http://php.net/manual/en/dateinterval.con
 format of the **interval spec**.
 
 ```php
-use MCP\Common\Time\TimeInterval;
+use QL\MCP\Common\Time\TimeInterval;
 
 // The interval spec is the exact same as PHP's DateInterval
 $int = new TimeInterval('P1M3DT7H');
@@ -207,9 +209,9 @@ not possible to actually write in the PHP language. As a result, this wrapper ex
 a public static factory method.
 
 ```php
-use MCP\Common\Time\TimeInterval;
-use MCP\Common\Time\TimePeriod;
-use MCP\Common\Time\TimePoint;
+use QL\MCP\Common\Time\TimeInterval;
+use QL\MCP\Common\Time\TimePeriod;
+use QL\MCP\Common\Time\TimePoint;
 
 $start = new TimePoint(2012, 1, 1, 0, 0, 0, "America/Detroit");
 $interval = new TimeInterval('P1W');
@@ -246,3 +248,26 @@ The output of the above code is as follows:
 ```
 
 Note that `$period0` and `$period1` are copies of the same time period, just constructed differently.
+
+### ByteString
+
+ByteString can be used to get byte offsets in binary strings, or total length in bytes. `strlen` and `substr` provide
+this functionality, but can be overridden in systems that use `mbstring` and `mbstring.func_overload`.
+
+This utility protects against that scenario and **always** performs byte-based lengths and offsets, rather than
+character-based.
+
+Please note: `substr` can be expensive when doing many offsets or string cuts and using array access is usually
+recommended if more performant code is required.
+
+```php
+use QL\MCP\Common\Time\ByteString;
+
+$string = 'abcd𐌀𐌁𐌂𐌃';
+echo ByteString::strlen($string);
+// int(20)
+
+echo ByteString::substr($string, 6, 3);
+// "𐌁"
+// "f0908c81" in hex
+```
