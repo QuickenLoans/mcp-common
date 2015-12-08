@@ -85,7 +85,7 @@ class MemoryLoggerTest extends PHPUnit_Framework_TestCase
     public function testDebug()
     {
         $logger = new MemoryLogger;
-        $logger->debug('This is an debug');
+        $logger->debug('This is a debug');
 
         $this->assertCount(1, $logger->messages);
         $this->assertSame('debug', $logger->messages[0]['level']);
@@ -99,8 +99,8 @@ class MemoryLoggerTest extends PHPUnit_Framework_TestCase
         $logger->error('message 2');
 
         $this->assertCount(2, $logger->messages);
-        $this->assertSame('message 1', $logger->messages[0]);
-        $this->assertSame('message 2', $logger->messages[1]);
+        $this->assertSame('message 1', $logger->messages[0]['message']);
+        $this->assertSame('message 2', $logger->messages[1]['message']);
     }
 
     public function testContext()

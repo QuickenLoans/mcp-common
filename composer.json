@@ -35,7 +35,11 @@
         "phpunit/php-invoker": "*",
 
         "paragonie/random_compat": "~1.1",
-        "psr/log": "*"
+        "psr/log": "*",
+
+        "symfony/config": "~2.8",
+        "symfony/dependency-injection": "~2.8",
+        "symfony/yaml": "~2.8"
     },
 
     "suggest": {

@@ -21,6 +21,7 @@ composer require mcp-common ~1.0
     - [TimePeriod](#timeperiod)
 - **Utility**
     - [ByteString](#bytestring)
+- [Dependency Injection Configuration](#dependency-injection-configuration)
 
 ### GUID
 
@@ -289,3 +290,16 @@ echo ByteString::substr($string, 6, 3);
 // "𐌁"
 // "f0908c81" in hex
 ```
+
+### Dependency Injection Configuration
+
+For convenience, a YAML configuration file is provided for use in symfony DI containers.
+
+To use: import the config file from your app's main configuration.
+
+```yaml
+imports:
+    - resource: ../vendor/ql/mcp-common/configuration/mcp-common.yml
+```
+
+This configuration provides the **Clock** as service `@mcp.common.clock`

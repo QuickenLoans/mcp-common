@@ -4,13 +4,13 @@ parameters:
     mcp.core.clock.time: 'now'
 
     # Clock Timezone
-    mcp.core.clock.timezone: null
+    mcp.core.clock.timezone: 'UTC'
 
 services:
 
     # Clock
-    mcp.core.clock:
-        class: 'MCP\DataType\Time\Clock'
+    mcp.common.clock:
+        class: 'QL\MCP\Common\Time\Clock'
         arguments:
             - %mcp.core.clock.time%
             - %mcp.core.clock.timezone%
