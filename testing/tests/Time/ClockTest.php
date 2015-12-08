@@ -25,15 +25,19 @@ class ClockTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MCP\Common\Time\Exception
+     * @expectedExceptionMessage Invalid current datetime UTC.
      */
     public function testConstructorInvalidTimeArgumentReturnsNull()
     {
         $clock = new Clock('asdf', 'UTC');
     }
 
+    /**
+     * @expectedException MCP\Common\Time\Exception
+     * @expectedExceptionMessage Invalid timezone asdfasdafasdf
+     */
     public function testInvalidTimeZoneArgumentThrowsException()
     {
-        $this->setExpectedException(Exception::CLASS);
         new Clock('now', 'asdfasdafasdf');
     }
 

@@ -24,7 +24,8 @@ trait TimeUtil
 {
     /**
      * @param TimePoint $date
-     * @return \DateTime
+     *
+     * @return DateTime
      */
     private function timePointToDateTime(TimePoint $date)
     {
@@ -33,6 +34,7 @@ trait TimeUtil
         $inputFormat = '%04d-%02d-%02d %02d:%02d:%02d';
         $tz = new DateTimeZone('UTC');
         preg_match($parserFormat, $date->format($parsableFormat, 'UTC'), $t);
+
         return new DateTime(sprintf($inputFormat, $t[1], $t[2], $t[3], $t[4], $t[5], $t[6]), $tz);
     }
 
@@ -43,6 +45,7 @@ trait TimeUtil
      * does not support the inclusion of fractional seconds.
      *
      * @param DateTime $date
+     *
      * @return TimePoint
      */
     private function dateTimeToTimePoint(DateTime $date)
@@ -76,8 +79,9 @@ trait TimeUtil
 
     /**
      * Create a Dateinterval spec from DateInterval properties
-     * 
+     *
      * @param DateInterval $interval
+     *
      * @return string
      */
     private function dateIntervalToIntervalSpec(DateInterval $interval)

@@ -21,7 +21,7 @@ class TimePoint implements JsonSerializable
     use TimeUtil;
 
     /**
-     * @var DateTime
+     * @type DateTime
      */
     private $date;
 
@@ -62,8 +62,8 @@ class TimePoint implements JsonSerializable
      * Compares two points in time
      *
      * @param TimePoint $timepoint The point in time to compare $this with.
-     * @return int Returns -1, 0 or 1 if $this is less than, equal to or
-     *    greater than $timepoint respectively.
+     *
+     * @return int Returns -1, 0 or 1 if $this is less than, equal to or greater than $timepoint respectively.
      */
     public function compare(TimePoint $timepoint)
     {
@@ -81,6 +81,7 @@ class TimePoint implements JsonSerializable
     /**
      * @param string $format
      * @param string $timezone
+     *
      * @return string
      */
     public function format($format, $timezone)
@@ -93,12 +94,13 @@ class TimePoint implements JsonSerializable
     /**
      * Modifies the time point similar to DateTime->modify()
      *
-     * The main difference is that this does not modify the current object in
-     * place as DateTime->modify() does. Instead, this method returns a new
-     * TimePoint with the modification applied.
+     * The main difference is that this does not modify the current object in place as DateTime->modify() does.
+     * Instead, this method returns a new TimePoint with the modification applied.
      *
      * @param string $modificationString
+     *
      * @throws Exception
+     *
      * @return TimePoint
      */
     public function modify($modificationString)
@@ -113,6 +115,7 @@ class TimePoint implements JsonSerializable
 
     /**
      * @param TimeInterval $interval
+     *
      * @return TimePoint
      */
     public function add(TimeInterval $interval)
@@ -125,6 +128,7 @@ class TimePoint implements JsonSerializable
 
     /**
      * @param TimeInterval $interval
+     *
      * @return TimePoint
      */
     public function sub(TimeInterval $interval)
@@ -137,6 +141,7 @@ class TimePoint implements JsonSerializable
 
     /**
      * @param TimePoint $timepoint
+     *
      * @return TimeInterval
      */
     public function diff(TimePoint $timepoint)

@@ -23,12 +23,12 @@ class Clock
     const ERR_FORMAT = 'Unable to parse malformed string %s to TimePoint.';
 
     /**
-     * @var string
+     * @type string
      */
     private $current;
 
     /**
-     * @var DateTimeZone
+     * @type DateTimeZone
      */
     private $timezone;
 
@@ -80,6 +80,7 @@ class Clock
      * does not currently support fractional seconds.
      *
      * @param DateTime $datetime
+     *
      * @return TimePoint
      */
     public function fromDateTime(DateTime $datetime)
@@ -101,6 +102,7 @@ class Clock
      *
      * @param string $input
      * @param string|null $format
+     *
      * @return TimePoint|null
      */
     public function fromString($input, $format = null)
@@ -136,8 +138,10 @@ class Clock
      * @param TimePoint $expiration
      * @param TimePoint|null $creation
      * @param string|null $skew
-     * @return bool
+     *
      * @throws Exception
+     *
+     * @return bool
      */
     public function inRange(TimePoint $expiration, TimePoint $creation = null, $skew = null)
     {

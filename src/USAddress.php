@@ -15,27 +15,27 @@ namespace MCP\Common;
 class USAddress
 {
     /**
-     * @var string
+     * @type string
      */
     private $street1;
 
     /**
-     * @var string
+     * @type string
      */
     private $street2;
 
     /**
-     * @var string
+     * @type string
      */
     private $city;
 
     /**
-     * @var string
+     * @type string
      */
     private $state;
 
     /**
-     * @var string
+     * @type string
      */
     private $zip;
 

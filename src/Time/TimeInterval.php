@@ -20,17 +20,18 @@ use Exception as BaseException;
 class TimeInterval
 {
     /**
-     * @var DateInterval
+     * @type DateInterval
      */
     private $dateInterval;
 
     /**
-     * @var string
+     * @type string
      */
     private $intervalSpec;
 
     /**
      * @param string $timeIntervalSpec
+     *
      * @throws Exception
      */
     public function __construct($timeIntervalSpec)
@@ -51,6 +52,7 @@ class TimeInterval
 
     /**
      * @param string $formatSpec
+     *
      * @return string
      */
     public function format($formatSpec)
@@ -70,8 +72,9 @@ class TimeInterval
 
     /**
      * Add negative interval property that is lost when constructing a new DateInterval
-     * 
+     *
      * @param string $extraSpec
+     *
      * @return null
      */
     private function addNegativeInterval($extraSpec)
@@ -83,8 +86,9 @@ class TimeInterval
 
     /**
      * Add days property that is lost when constructing a new DateInterval
-     * 
+     *
      * @param string $extraSpec
+     *
      * @return null
      */
     private function addDays($extraSpec)
@@ -109,8 +113,9 @@ class TimeInterval
 
     /**
      * Parse the spec into the standard DateInterval spec, and our extra data spec
-     * 
+     *
      * @param string
+     *
      * @return array
      */
     private function parseSpec($intervalSpec)

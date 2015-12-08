@@ -20,12 +20,12 @@ class TimePeriod implements Iterator
     use TimeUtil;
 
     /**
-     * @var DatePeriod
+     * @type DatePeriod
      */
     private $datePeriod;
 
     /**
-     * @var IteratorIterator
+     * @type IteratorIterator
      */
     private $iterator;
 
@@ -34,6 +34,7 @@ class TimePeriod implements Iterator
      * @param TimeInterval $interval
      * @param int $recurrences
      * @param int $options
+     *
      * @return TimePeriod
      */
     public static function createWithRecurrences(TimePoint $start, TimeInterval $interval, $recurrences, $options = 0)
