@@ -5,19 +5,13 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType\Time;
+namespace MCP\Common\Time;
 
 use DateTime;
 use PHPUnit_Framework_TestCase;
 
 class ClockTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\Clock
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testConstructorArgumentIsUsedForTimeInterval()
     {
         $tz = 'UTC';
@@ -30,32 +24,19 @@ class ClockTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\Clock<extended>
-     * @expectedException \MCP\DataType\Time\Exception
+     * @expectedException MCP\Common\Time\Exception
      */
     public function testConstructorInvalidTimeArgumentReturnsNull()
     {
         $clock = new Clock('asdf', 'UTC');
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\Clock<extended>
-     */
     public function testInvalidTimeZoneArgumentThrowsException()
     {
-        $this->setExpectedException('\MCP\DataType\Time\Exception');
+        $this->setExpectedException(Exception::CLASS);
         new Clock('now', 'asdfasdafasdf');
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\Clock<extended>
-     */
     public function testNoTimeZoneGivenPullsFromPHPConfig()
     {
         ini_set('date.timezone', 'America/Detroit');
@@ -140,7 +121,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $clock = new Clock();
         $output = $clock->fromDateTime(new DateTime());
 
-        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+        $this->assertInstanceOf(TimePoint::CLASS, $output);
     }
 
     /**
@@ -152,7 +133,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $output = $clock->fromString($input);
 
         if (is_string($expected)) {
-            $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+            $this->assertInstanceOf(TimePoint::CLASS, $output);
             $this->assertEquals($expected, $output->format('Y-m-d H:i:s.u e', 'UTC'));
         } else {
             $this->assertEquals($expected, $output);
@@ -220,7 +201,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $clock = new Clock();
         $output = $clock->fromString($input, $format);
 
-        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+        $this->assertInstanceOf(TimePoint::CLASS, $output);
         $this->assertEquals($expected, $output->format('Y-m-d H:i:s.u e', 'UTC'));
     }
 }

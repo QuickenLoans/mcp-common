@@ -5,17 +5,12 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType;
+namespace MCP\Common;
 
 use PHPUnit_Framework_TestCase;
 
 class USAddressTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @group DataType
-     * @group Address
-     * @covers MCP\DataType\USAddress
-     */
     public function testStreetAddress1ReturnsFromGetter()
     {
         $input = 'mystreet1';
@@ -26,11 +21,6 @@ class USAddressTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Address
-     * @covers MCP\DataType\USAddress
-     */
     public function testStreetAddress2ReturnsFromGetter()
     {
         $input = 'mystreet2';
@@ -41,11 +31,6 @@ class USAddressTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Address
-     * @covers MCP\DataType\USAddress
-     */
     public function testCityReturnsFromGetter()
     {
         $input = 'mycity';
@@ -56,11 +41,6 @@ class USAddressTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Address
-     * @covers MCP\DataType\USAddress
-     */
     public function testStateReturnsFromGetter()
     {
         $input = 'mystate';
@@ -71,11 +51,6 @@ class USAddressTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Address
-     * @covers MCP\DataType\USAddress
-     */
     public function testZipReturnsFromGetter()
     {
         $input = 'myzip';

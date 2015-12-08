@@ -31,8 +31,8 @@
 
 
   <testsuites>
-    <testsuite name="MCP Core Unit Tests">
-      <directory>tests/MCP</directory>
+    <testsuite>
+      <directory>testing/tests</directory>
     </testsuite>
   </testsuites>
 

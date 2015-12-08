@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType\Time;
+namespace MCP\Common\Time;
 
 use DateTime;
 use DateTimeZone;
@@ -23,7 +23,7 @@ class TimeUtilTest extends \PHPUnit_Framework_TestCase
     {
         $output = $this->dateTimeToTimePoint($input);
 
-        $this->assertInstanceOf('MCP\DataType\Time\TimePoint', $output);
+        $this->assertInstanceOf(TimePoint::CLASS, $output);
 
         $timezone = ($input->getTimezone() instanceof DateTimeZone) ? $input->getTimezone()->getName() : date_default_timezone_get();
 

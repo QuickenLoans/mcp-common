@@ -5,30 +5,18 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType\Time;
+namespace MCP\Common\Time;
 
 use PHPUnit_Framework_TestCase;
 
 class TimePointTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testConstructingInvalidTimeThrowsException()
     {
-        $this->setExpectedException('\MCP\DataType\Time\Exception');
+        $this->setExpectedException(Exception::CLASS);
         new TimePoint(10193, 1, 1, 0, 0, 0, 'UTC');
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testFormatStringPassesThrough()
     {
         $expected = '1983-12-15 14:02:42';
@@ -37,12 +25,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testModifyMethodCreatesNewTimePoint()
     {
         $expected = '2050-12-15 14:02:42';
@@ -52,25 +34,13 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testModifyWithBadStringThrowsException()
     {
-        $this->setExpectedException('\MCP\DataType\Time\Exception');
+        $this->setExpectedException(Exception::CLASS);
         $tp = new TimePoint(1945, 7, 16, 5, 29, 45, 'America/Denver');
         $tp->modify('bad string');
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testCompareNormalizesTimezones()
     {
         $expected = 1;
@@ -80,12 +50,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testCompareSameTimePointsShouldShowAsEqual()
     {
         $expected = 0;
@@ -95,12 +59,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testCompareCloseTimePointsShouldShowNotEqual()
     {
         $expected = -1;
@@ -110,12 +68,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testAddingFourHoursDateInterval()
     {
         $expected = new TimePoint(1775, 4, 19, 10, 0, 0, 'America/Detroit');
@@ -125,12 +77,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected->format('Y-m-d H:i:s', 'America/Detroit'), $actual->format('Y-m-d H:i:s', 'America/Detroit'));
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testAddingOneDayDateInterval()
     {
         $expected = new TimePoint(1963, 11, 22, 11, 30, 0, 'America/Detroit');
@@ -140,12 +86,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected->format('Y-m-d H:i:s', 'America/Detroit'), $actual->format('Y-m-d H:i:s', 'America/Detroit'));
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testDiffingTimePointsWithPositiveInterval()
     {
         $expected = new TimeInterval('P0Y10M8DT22H30M0S-313D');
@@ -158,12 +98,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals(new TimeInterval('P0Y10M8DT22H30M0S'), $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testDiffingTimePointsWithNegativeInterval()
     {
         $expected = new TimeInterval('P1Y10M8DT22H31M0S-I677D');
@@ -176,12 +110,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals(new TimeInterval('P1Y10M8DT22H31M0S'), $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testDiffingTimePointsWithSameDate()
     {
         $expected = new TimeInterval('P0Y0M0DT6H13M0S');
@@ -193,12 +121,6 @@ class TimePointTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePoint
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testDiffingTimePointsWithSameTimestamp()
     {
         $expected = new TimeInterval('P0Y0M0DT0H0M0S');

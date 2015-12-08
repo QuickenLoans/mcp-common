@@ -5,18 +5,12 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType\Time;
+namespace MCP\Common\Time;
 
 use PHPUnit_Framework_TestCase;
 
 class TimeIntervalTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testIntervalSpecIsSavedFromConstruction()
     {
         $input = 'P2W';
@@ -24,39 +18,23 @@ class TimeIntervalTest extends PHPUnit_Framework_TestCase
         $this->assertSame($input, $tint->intervalSpec());
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testBadIntervalSpecThrowsException()
     {
-        $this->setExpectedException('\MCP\DataType\Time\Exception');
+        $this->setExpectedException(Exception::CLASS);
         $input = 'bad interval format';
         new TimeInterval($input);
     }
 
     /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
+     * @expectedException PHPUnit_Framework_Error_Warning
      */
     public function testBadFormatSpecThrowsException()
     {
-        $this->setExpectedException('\PHPUnit_Framework_Error_Warning');
         $input = array();
         $tint = new TimeInterval('P2W');
         $tint->format($input);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testGoodFormatterSpec()
     {
         $expected = 'every 14 days';
@@ -66,12 +44,6 @@ class TimeIntervalTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testIntervalSpecWithInvert()
     {
         $expected = '-1 year';
@@ -81,12 +53,6 @@ class TimeIntervalTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testIntervalSpecWithDays()
     {
         $expected = '1 year or 365 days';
@@ -96,12 +62,6 @@ class TimeIntervalTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testIntervalSpecWithInvertAndDays()
     {
         $expected = '-2 years or -730 days';
@@ -111,12 +71,6 @@ class TimeIntervalTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimeInterval
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testIntervalSpecIgnoresBadDays()
     {
         $expected = '2 years or (unknown) days';

@@ -5,19 +5,13 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType\Time;
+namespace MCP\Common\Time;
 
 use DatePeriod;
 use PHPUnit_Framework_TestCase;
 
 class TimePeriodTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePeriod
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testEveryThreeDaysInTwoWeeks()
     {
         $start = new TimePoint(2012, 10, 21, 0, 0, 0, 'UTC');
@@ -31,17 +25,12 @@ class TimePeriodTest extends PHPUnit_Framework_TestCase
             new TimePoint(2012, 10, 30, 0, 0, 0, 'UTC'),
             new TimePoint(2012, 11, 2, 0, 0, 0, 'UTC'),
         );
+
         foreach ($period as $key => $timePoint) {
             $this->assertSame($expected[$key]->format('Y-m-d H:i:s', 'UTC'), $timePoint->format('Y-m-d H:i:s', 'UTC'));
         }
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePeriod
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testCreateWithRecurrences()
     {
         $start = new TimePoint(2012, 9, 13, 0, 0, 0, 'UTC');
@@ -58,12 +47,6 @@ class TimePeriodTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @group DataType
-     * @group Time
-     * @covers MCP\DataType\Time\TimePeriod
-     * @covers MCP\DataType\Time\TimeUtil
-     */
     public function testCreateWithRecurrencesSkippingFirst()
     {
         $start = new TimePoint(2012, 9, 13, 0, 0, 0, 'UTC');
@@ -74,7 +57,9 @@ class TimePeriodTest extends PHPUnit_Framework_TestCase
             new TimePoint(2012, 9, 15, 0, 0, 0, 'UTC'),
             new TimePoint(2012, 9, 16, 0, 0, 0, 'UTC'),
         );
+
         $period = TimePeriod::createWithRecurrences($start, $interval, $recurrences, DatePeriod::EXCLUDE_START_DATE);
+
         foreach ($period as $key => $timePoint) {
             $this->assertSame($expected[$key]->format('Y-m-d H:i:s', 'UTC'), $timePoint->format('Y-m-d H:i:s', 'UTC'));
         }

@@ -5,16 +5,13 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType;
+namespace MCP\Common;
 
 use PHPUnit_Framework_TestCase;
 
 class GUIDTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider validGuids
      */
     public function testAllInputHexFormatsConstructedGuidCorrectly($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
@@ -26,9 +23,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider validGuids
      */
     public function testAllBase64InputStringsConstructGuidCorrectly($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
@@ -40,9 +34,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider validGuids
      */
     public function testAllBinaryStringsConstructGuidCorrectly($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
@@ -54,9 +45,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider validGuids
      */
     public function testAllGuidsNormalizeBase64Output($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
@@ -68,9 +56,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider validGuids
      */
     public function testAllGuidsNormalizeHumanReadableOutput($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
@@ -82,9 +67,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider validGuids
      */
     public function testAllGuidsNormalizeToStringOutput($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
@@ -97,9 +79,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider validGuids
      */
     public function testAllGuidsNormalizeBinaryOutput($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
@@ -111,9 +90,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider invalidGuids
      */
     public function testCreatingFromHexStringCatchesInvalidGuids($hex, $base64, $bin)
@@ -123,9 +99,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider invalidGuids
      */
     public function testCreatingFromBase64StringCatchesInvalidGuids($hex, $base64, $bin)
@@ -135,9 +108,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      * @dataProvider invalidGuids
      */
     public function testCreatingFromBinaryStringCatchesInvalidGuids($hex, $base64, $bin)
@@ -151,10 +121,6 @@ class GUIDTest extends PHPUnit_Framework_TestCase
      * of the random nature of GUID's you might consider either upping the
      * counter or just running this test many times if you suspect there is a
      * bug in the code this covers.
-     *
-     * @group DataType
-     * @group GUID
-     * @covers MCP\DataType\GUID
      */
     public function testNewlyCreatedGuidsAreValid()
     {

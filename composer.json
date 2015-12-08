@@ -1,33 +1,40 @@
 {
-    "name": "ql/mcp-core",
-    "description": "Provides various 'data type' style classes: GUID, HttpUrl, IPv4Address, USAddress, and date/time related functionality.",
-    "license": "proprietary",
-    "homepage": "http://git/mcp/mcp-core",
+    "name": "ql/mcp-common",
+    "description": "Common library for Quicken Loans PHP projects",
+
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Matt Nagi",
             "email": "mattnagi@quickenloans.com"
+        },
+        {
+            "name": "Steve Kluck",
+            "email": "stevekluck@quickenloans.com"
+        },
+        {
+            "name": "Matt Colf",
+            "email": "mattcolf@quickenloans.com"
         }
     ],
+
     "autoload": {
-        "psr-4": { "MCP\\": "src\\"}
+        "psr-4": { "MCP\\Common\\": "src\\"}
     },
     "archive": {
-        "exclude": ["/tests", "/phpunit.xml.dist"]
-    },
-
-    "conflict": {
-        "ql/mcp": "*"
+        "exclude": ["/testing", "/phpunit.xml.dist"]
     },
 
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "ext-date": "*",
         "ext-pcre": "*",
         "ext-SPL": "*"
     },
+
     "require-dev": {
-        "phpunit/phpunit": "*",
+        "phpunit/phpunit": "~4.5",
         "phpunit/php-invoker": "*"
     }
 }

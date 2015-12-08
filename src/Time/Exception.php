@@ -5,11 +5,13 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\DataType\Time;
+namespace MCP\Common\Time;
+
+use Exception as BaseException;
 
 /**
  * @internal
  */
-class Exception extends \Exception
+class Exception extends BaseException
 {
 }
