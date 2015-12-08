@@ -7,6 +7,8 @@
 
 namespace MCP\Common;
 
+use JsonSerializable;
+
 /**
  * This represents a Microsoft .NET GUID
  *
@@ -22,7 +24,7 @@ namespace MCP\Common;
  *
  * @api
  */
-class GUID
+class GUID implements JsonSerializable
 {
     /**
      * @type string[]
@@ -40,7 +42,7 @@ class GUID
     private $guid;
 
     /**
-     * Creates a GUID object from a 'hex string'
+     * Creates a GUID object from a "hex string"
      *
      * This accepts a strings such as "{9a39ed24-1752-4459-9ac2-6b0e8f0dcec7}" and generates a GUID object. Note that
      * this validates the input string and if validation fails it will return null.
@@ -161,6 +163,31 @@ class GUID
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->asHumanReadable();
+    }
+
+    /**
+     * Serialize as a JSON string in human-readable form.
+     *
+     * Example:
+     *
+     * ```
+     * $guid = GUID::createFromHex('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7');
+     * echo json_encode($guid);
+     *
+     * "{9A39ED24-1752-4459-9AC2-6B0E8F0DCEC7}"
+     * ```
+     */
+    public function jsonSerialize()
+    {
+        return $this->asHumanReadable();
+    }
+
+    /**
      * Outputs a 'human readable' version of the GUID string
      *
      * The formatting will currently output something like "{74EC705A-AD08-42A6-BCC5-5B9F93FAB0F4}" as the GUID
@@ -218,13 +245,5 @@ class GUID
     public function asBase64()
     {
         return rtrim(base64_encode($this->guid), '=');
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->asHumanReadable();
     }
 }

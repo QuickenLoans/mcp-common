@@ -132,6 +132,14 @@ class GUIDTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGUIDIsJSONSerializable()
+    {
+        $guid = GUID::createFromHex('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7');
+        $expected = '"{9A39ED24-1752-4459-9AC2-6B0E8F0DCEC7}"';
+
+        $this->assertSame($expected, json_encode($guid));
+    }
+
     /**
      * @return array
      */

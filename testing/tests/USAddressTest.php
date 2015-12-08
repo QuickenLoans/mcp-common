@@ -60,4 +60,12 @@ class USAddressTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $actual);
     }
+
+    public function testAddressIsJSONSerializable()
+    {
+        $address = new USAddress('1 Campus Martius', '', 'Detroit', 'MI', '48226');
+        $expected = '{"street1":"1 Campus Martius","street2":"","city":"Detroit","state":"MI","zip":"48226"}';
+
+        $this->assertSame($expected, json_encode($address));
+    }
 }

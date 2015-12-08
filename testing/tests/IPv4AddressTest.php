@@ -74,6 +74,14 @@ class IPv4AddressTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructWithNonIntegerArgument()
     {
-        new IPv4Address(array());
+        new IPv4Address([]);
+    }
+
+    public function testIPv4IsJSONSerializable()
+    {
+        $ip = IPv4Address::create('192.168.0.101');
+        $expected = '"192.168.0.101"';
+
+        $this->assertSame($expected, json_encode($ip));
     }
 }

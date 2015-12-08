@@ -52,6 +52,17 @@ class TimePoint implements JsonSerializable
 
     /**
      * Serialize as a RFC 3339 UTC timezone JSON string
+     *
+     * @see https://www.ietf.org/rfc/rfc3339.txt
+     *
+     * Example:
+     *
+     * ```
+     * $time = new TimePoint(2015, 10, 30, 14, 30, 0, 'America/Detroit');
+     * echo json_encode($time);
+     *
+     * "2015-10-30T18:30:00Z"
+     * ```
      */
     public function jsonSerialize()
     {

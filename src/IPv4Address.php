@@ -8,6 +8,7 @@
 namespace MCP\Common;
 
 use InvalidArgumentException;
+use JsonSerializable;
 
 /**
  * An IP address
@@ -22,7 +23,7 @@ use InvalidArgumentException;
  *
  * @api
  */
-class IPv4Address
+class IPv4Address implements JsonSerializable
 {
     /**
      * @type string|null
@@ -122,6 +123,23 @@ class IPv4Address
      * @return string
      */
     public function __toString()
+    {
+        return $this->asString();
+    }
+
+    /**
+     * Serialize as a JSON string.
+     *
+     * Example:
+     *
+     * ```
+     * $ip = IPv4Address::create('192.168.0.101');
+     * echo json_encode($ip);
+     *
+     * "192.168.0.101"
+     * ```
+     */
+    public function jsonSerialize()
     {
         return $this->asString();
     }

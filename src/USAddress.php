@@ -7,12 +7,14 @@
 
 namespace MCP\Common;
 
+use JsonSerializable;
+
 /**
  * A US address
  *
  * @api
  */
-class USAddress
+class USAddress implements JsonSerializable
 {
     /**
      * @type string
@@ -53,6 +55,29 @@ class USAddress
         $this->city = $city;
         $this->state = $state;
         $this->zip = $zip;
+    }
+
+    /**
+     * Serialize as a JSON object.
+     *
+     * Example:
+     *
+     * ```
+     * $address = new USAddress('1 Campus Martius', '', 'Detroit', 'MI', '48226');
+     * echo json_encode($address);
+     *
+     * {"street1":"1 Campus Martius","street2":"","city":"Detroit","state":"MI","zip":"48226"}
+     * ```
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'street1' => $this->street1(),
+            'street2' => $this->street2(),
+            'city' => $this->city(),
+            'state' => $this->state(),
+            'zip' => $this->zip(),
+        ];
     }
 
     /**
