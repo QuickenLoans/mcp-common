@@ -20,7 +20,7 @@
     ],
 
     "autoload": {
-        "psr-4": { "MCP\\Common\\": "src\\"}
+        "psr-4": { "QL\\MCP\\Common\\": "src\\"}
     },
     "archive": {
         "exclude": ["/testing", "/phpunit.xml.dist"]

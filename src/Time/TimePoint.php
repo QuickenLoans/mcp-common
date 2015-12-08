@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common\Time;
+namespace QL\MCP\Common\Time;
 
 use DateInterval;
 use DateTime;
@@ -24,8 +24,8 @@ use Exception as BaseException;
  * Usage:
  *
  * ```php
- * use MCP\Common\Time\TimeInterval;
- * use MCP\Common\Time\TimePoint;
+ * use QL\MCP\Common\Time\TimeInterval;
+ * use QL\MCP\Common\Time\TimePoint;
  *
  * $time = new TimePoint(1999, 3, 31, 18, 15, 0, 'America/Detroit');
  *

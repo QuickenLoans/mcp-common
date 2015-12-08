@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common;
+namespace QL\MCP\Common;
 
 use JsonSerializable;
 
@@ -23,6 +23,8 @@ use JsonSerializable;
  * Usage:
  *
  * ```php
+ * use QL\MCP\Common\IPv4Address;
+ *
  * $ip = IPv4Address::create('192.168.0.101');
  *
  * echo $ip->asInt();
@@ -66,7 +68,7 @@ class IPv4Address implements JsonSerializable
      * Creates an IPv4Address object from a hostname
      *
      * ```
-     * use MCP\Common\IPv4Address;
+     * use QL\MCP\Common\IPv4Address;
      * $ip = IPv4Address::createFromHostString('www.google.com');
      * ```
      *

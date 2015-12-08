@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common\Time;
+namespace QL\MCP\Common\Time;
 
 use DateInterval;
 use DatePeriod;
@@ -20,9 +20,9 @@ use IteratorIterator;
  * Usage:
  *
  * ```php
- * use MCP\Common\Time\TimeInterval;
- * use MCP\Common\Time\TimePeriod;
- * use MCP\Common\Time\TimePoint;
+ * use QL\MCP\Common\Time\TimeInterval;
+ * use QL\MCP\Common\Time\TimePeriod;
+ * use QL\MCP\Common\Time\TimePoint;
  *
  * $start = new TimePoint(2012, 1, 1, 0, 0, 0, 'America/Detroit');
  * $interval = new TimeInterval('P1W');

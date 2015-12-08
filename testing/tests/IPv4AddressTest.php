@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common;
+namespace QL\MCP\Common;
 
 use PHPUnit_Framework_TestCase;
 
@@ -70,7 +70,7 @@ class IPv4AddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MCP\Common\Exception
+     * @expectedException QL\MCP\Common\Exception
      * @expectedExceptionMessage IPv4Address must be constructed with an integer
      */
     public function testConstructWithNonIntegerArgument()

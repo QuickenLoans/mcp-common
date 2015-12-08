@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common\Time;
+namespace QL\MCP\Common\Time;
 
 use DateTime;
 use DateTimeZone;
@@ -17,13 +17,13 @@ use Exception as BaseException;
  * Usage:
  *
  * ```php
- * use MCP\Common\Time\Clock;
+ * use QL\MCP\Common\Time\Clock;
  *
  * $clock = new Clock;
  * $time = $clock->read();
  *
  * var_dump($time);
- * // class MCP\Common\Time\TimePoint#1 {}
+ * // class QL\MCP\Common\Time\TimePoint#1 {}
  * ```
  */
 class Clock

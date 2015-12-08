@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common;
+namespace QL\MCP\Common;
 
 use JsonSerializable;
 
@@ -20,6 +20,8 @@ use JsonSerializable;
  * Usage:
  *
  * ```php
+ * use QL\MCP\Common\USAddress;
+ *
  * $address = new USAddress('1 Campus Martius', '', 'Detroit', 'MI', '48226');
  *
  * echo $address->street1() . $address->street2();

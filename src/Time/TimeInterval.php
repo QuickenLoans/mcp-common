@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common\Time;
+namespace QL\MCP\Common\Time;
 
 use DateInterval;
 use Exception as BaseException;
@@ -18,7 +18,7 @@ use Exception as BaseException;
  * Usage:
  *
  * ```php
- * use MCP\Common\Time\TimeInterval;
+ * use QL\MCP\Common\Time\TimeInterval;
  *
  * // The interval spec is the exact same as PHP's DateInterval
  * $interval = new TimeInterval('P1M3DT7H');

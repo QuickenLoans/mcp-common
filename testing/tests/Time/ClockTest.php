@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common\Time;
+namespace QL\MCP\Common\Time;
 
 use DateTime;
 use PHPUnit_Framework_TestCase;
@@ -24,7 +24,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MCP\Common\Time\Exception
+     * @expectedException QL\MCP\Common\Time\Exception
      * @expectedExceptionMessage Invalid current datetime UTC.
      */
     public function testConstructorInvalidTimeArgumentReturnsNull()
@@ -33,7 +33,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MCP\Common\Time\Exception
+     * @expectedException QL\MCP\Common\Time\Exception
      * @expectedExceptionMessage Invalid timezone asdfasdafasdf
      */
     public function testInvalidTimeZoneArgumentThrowsException()

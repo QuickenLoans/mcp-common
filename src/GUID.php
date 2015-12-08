@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common;
+namespace QL\MCP\Common;
 
 use JsonSerializable;
 
@@ -18,7 +18,7 @@ use JsonSerializable;
  * Usage:
  *
  * ```php
- * namespace MCP\Common;
+ * namespace QL\MCP\Common;
  *
  * $guid = GUID::create();
  * echo $guid;
