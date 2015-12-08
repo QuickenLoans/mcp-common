@@ -20,17 +20,14 @@
     ],
 
     "autoload": {
-        "psr-4": { "QL\\MCP\\Common\\": "src\\"}
+        "psr-4": { "QL\\MCP\\Common\\": "src\\" }
     },
     "archive": {
-        "exclude": ["/testing", "/phpunit.xml.dist"]
+        "exclude": [ "/testing", "/phpunit.xml.dist" ]
     },
 
     "require": {
-        "php": ">=5.5.0",
-        "ext-date": "*",
-        "ext-pcre": "*",
-        "ext-SPL": "*"
+        "php": ">=5.5.0"
     },
 
     "require-dev": {
