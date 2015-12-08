@@ -70,7 +70,8 @@ class IPv4AddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException MCP\Common\Exception
+     * @expectedExceptionMessage IPv4Address must be constructed with an integer
      */
     public function testConstructWithNonIntegerArgument()
     {

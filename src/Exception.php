@@ -5,9 +5,9 @@
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace MCP\Common\Time;
+namespace MCP\Common;
 
-use MCP\Common\Exception as BaseException;
+use Exception as BaseException;
 
 class Exception extends BaseException
 {

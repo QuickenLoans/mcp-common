@@ -7,7 +7,6 @@
 
 namespace MCP\Common;
 
-use InvalidArgumentException;
 use JsonSerializable;
 
 /**
@@ -115,12 +114,12 @@ class IPv4Address implements JsonSerializable
      * @param int $ipAddressInt
      * @param string|null $originalHost
      *
-     * @throws InvalidArgumentException Throws an exception if the given IP address is not an integer.
+     * @throws Exception Throws an exception if the given IP address is not an integer.
      */
     public function __construct($ipAddressInt, $originalHost = null)
     {
         if (!is_int($ipAddressInt)) {
-            throw new InvalidArgumentException('IPv4Address must be constructed with an integer.');
+            throw new Exception('IPv4Address must be constructed with an integer.');
         }
 
         $this->address = $ipAddressInt;
