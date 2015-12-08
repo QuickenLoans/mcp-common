@@ -13,7 +13,7 @@ composer require mcp-common ~1.0
 - [GUID](#guid)
 - [IPv4Address](#ipv4address)
 - [USAddress](#usaddress)
-- [OpaqueProperty](#opaqueProperty)
+- [OpaqueProperty](#opaqueproperty)
 - **Time**
     - [Clock](#clock)
     - [TimePoint](#timepoint)
