@@ -8,12 +8,12 @@
 namespace QL\MCP\Common;
 
 use JsonSerializable;
+use QL\MCP\Common\Utility\ByteString;
 
 /**
  * This represents a Microsoft .NET GUID
  *
- * Note that a Microsoft .NET GUID is the same as an RFC 4122 UUID, standard
- * variant, 4th algorithm (see chapter 4.4 of the RFC for details).
+ * Note that a Microsoft .NET GUID is the same as an RFC 4122 UUID, standard variant, version 4.
  *
  * Usage:
  *
@@ -25,18 +25,21 @@ use JsonSerializable;
  *
  * // {4577267B-AE54-4C03-8C86-E628D5D3695A}
  * ```
+ *
+ * @see https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_.28random.29
+ * @see https://www.ietf.org/rfc/rfc4122.txt
  */
 class GUID implements JsonSerializable
 {
     /**
      * @type string[]
      */
-    private static $searchChars = array('{', '-', '}', 'a', 'b', 'c', 'd', 'e', 'f');
+    private static $searchChars = ['{', '-', '}', 'a', 'b', 'c', 'd', 'e', 'f'];
 
     /**
      * @type string[]
      */
-    private static $replaceChars = array('', '', '', 'A', 'B', 'C', 'D', 'E', 'F');
+    private static $replaceChars = ['', '', '', 'A', 'B', 'C', 'D', 'E', 'F'];
 
     /**
      * @type string
@@ -46,8 +49,8 @@ class GUID implements JsonSerializable
     /**
      * Creates a GUID object from a "hex string"
      *
-     * This accepts a strings such as "{9a39ed24-1752-4459-9ac2-6b0e8f0dcec7}" and generates a GUID object. Note that
-     * this validates the input string and if validation fails it will return null.
+     * This accepts a strings such as "{9a39ed24-1752-4459-9ac2-6b0e8f0dcec7}" and generates a GUID object.
+     * Note that this validates the input string and if validation fails it will return null.
      *
      * @param string $hexString
      *
@@ -102,29 +105,24 @@ class GUID implements JsonSerializable
     }
 
     /**
-     * Creates a new GUID
+     * Creates a new V4 UUID
      *
      * @return GUID
      */
     public static function create()
     {
-        $guid = pack(
-            'nnnnnnnn',
-            mt_rand(0x0000, 0xFFFF),
-            mt_rand(0x0000, 0xFFFF),
-            mt_rand(0x0000, 0xFFFF),
-            mt_rand(0x4000, 0x4FFF),
-            mt_rand(0x8000, 0xBFFF),
-            mt_rand(0x0000, 0xFFFF),
-            mt_rand(0x0000, 0xFFFF),
-            mt_rand(0x0000, 0xFFFF)
-        );
+        $guid = \random_bytes(16);
+
+        // Reset version byte to version 4 (0100)
+        $guid[6] = chr(ord($guid[6]) & 0x0f | 0x40);
+
+        $guid[8] = chr(ord($guid[8]) & 0x3f | 0x80);
 
         return new static($guid);
     }
 
     /**
-     * Validates the given string is a correct byte stream for a GUID
+     * Validates the given string is a correct byte stream for a GUID.
      *
      * This does some seemingly crazy things, but basically it validates that the given value will be within the set
      * of possible GUID's that GUID::create() can produce.
@@ -135,7 +133,7 @@ class GUID implements JsonSerializable
      */
     private static function validate($guid)
     {
-        if (strlen($guid) !== 16) {
+        if (ByteString::strlen($guid) !== 16) {
             return false;
         }
 
