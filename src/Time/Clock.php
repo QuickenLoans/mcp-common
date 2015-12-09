@@ -17,13 +17,32 @@ use Exception as BaseException;
  * Usage:
  *
  * ```php
+ * use DateTime;
  * use QL\MCP\Common\Time\Clock;
  *
  * $clock = new Clock;
- * $time = $clock->read();
  *
+ * $time = $clock->read();
  * var_dump($time);
  * // class QL\MCP\Common\Time\TimePoint#1 {}
+ *
+ * $time = $clock->fromDateTime(new DateTime);
+ * var_dump($time);
+ * // class QL\MCP\Common\Time\TimePoint#2 {}
+ *
+ * $time = $clock->fromString('2015-12-10T10:30:00+04:00');
+ * var_dump($time);
+ * // class QL\MCP\Common\Time\TimePoint#3 {}
+ *
+ * $clock = new Clock('2015-09-15 12:00:00', 'UTC');
+ * $expiresAt = new TimePoint(2015, 9, 15, 10, 0, 0, 'America/Detroit');
+ * $createdAt = new TimePoint(2015, 9, 15, 7, 0, 0, 'America/Detroit');
+ * $skew = '30 seconds';
+ *
+ * $isValid = $clock->inRange($expiresAt, $createdAt, $skew);
+ * var_dump($isValid);
+ *
+ * // bool(true)
  * ```
  */
 class Clock

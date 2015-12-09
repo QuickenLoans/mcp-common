@@ -28,13 +28,15 @@ composer require mcp-common ~1.0
 This class represents a Microsoft .NET GUID. Note that a Microsoft .NET GUID is the same as an RFC 4122 UUID,
 standard variant, 4th algorithm (see chapter 4.4 of [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt) for details).
 
+*Please note this class requires PHP7 or `paragonie/random_compat`.*
+
 ```php
 use QL\MCP\Common\GUID;
 
 $guid = GUID::create();
 echo $guid;
 
-// outputs something like "{4577267B-AE54-4C03-8C86-E628D5D3695A}"
+// {4577267B-AE54-4C03-8C86-E628D5D3695A}
 ```
 
 All of the following create calls create calls result in the *same GUID value*.
@@ -61,6 +63,7 @@ $guid->asHex();           // '0C875FFC61AB4A75A4AF5F89ADCE0D63'
 $guid->asBin();           // pack('H*', '0C875FFC61AB4A75A4AF5F89ADCE0D63')
 $guid->asBase64();        // 'DIdf/GGrSnWkr1+Jrc4NYw'
 $guid->asHumanReadable(); // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
+
 echo $guid;               // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
 ```
 
@@ -144,6 +147,35 @@ One thing to note is that this clock will not change as the program continues to
 accurate time measurements, this class would have to be change to work slightly differently than it is now. In other
 words, if your program is dealing with time resolution at or under a few seconds, this class is not sufficient for that.
 
+The clock can also be used to parse datetimes from `DateTime` or strings.
+
+```php
+use DateTime;
+use QL\MCP\Common\Time\Clock;
+
+$clock = new Clock;
+
+$time = $clock->fromDateTime(new DateTime);
+var_dump($time);
+// class QL\MCP\Common\Time\TimePoint#1 {}
+
+$time = $clock->fromString('2015-12-10T10:30:00+04:00');
+var_dump($time);
+// class QL\MCP\Common\Time\TimePoint#2 {}
+
+// Check the current time against an expiry, and optionally a created time and clock skew.
+
+$clock = new Clock('2015-09-15 12:00:00', 'UTC');
+$expiresAt = new TimePoint(2015, 9, 15, 10, 0, 0, 'America/Detroit');
+$createdAt = new TimePoint(2015, 9, 15, 7, 0, 0, 'America/Detroit');
+$skew = '30 seconds';
+
+$isValid = $clock->inRange($expiresAt, $createdAt, $skew);
+var_dump($isValid);
+
+// bool(true)
+```
+
 ### TimePoint
 
 This is a wrapper for the native php [DateTime](http://php.net/DateTime) class. The changes made to the public API for
@@ -159,28 +191,31 @@ this class are means to a very specific set of goals. These goals are as follows
 use QL\MCP\Common\Time\TimeInterval;
 use QL\MCP\Common\Time\TimePoint;
 
-$time = new TimePoint(1999, 3, 31, 18, 15, 0, "America/Detroit");
+$time = new TimePoint(1999, 3, 31, 18, 15, 0, 'America/Detroit');
 
 // returns a -1, 0 or 1 if $time is less than, equal to or greater than the argument respectively.
-$time->compare(new TimePoint(1983, 12, 15, 21, 2, 0, "America/Detroit"));
+$time->compare(new TimePoint(1983, 12, 15, 21, 2, 0, 'America/Detroit'));
 // -1
 
-// the format string is exactly the same as DateTime->format(). Note the *required* timezone argument.
-$time->format("Y-m-d H:i:s", "UTC");
+// the format string is exactly the same as DateTime->format(). Note the required timezone argument.
+$time->format('Y-m-d H:i:s', 'UTC');
 // '1999-03-31 23:15:00'
 
 // Note that $time did not change, a copy was created. TimePoint->modify() takes the same argument format as modify()
-$time->modify("+1 day")->format('Y-m-d H:i:s', 'America/Detroit');
+$time2 = $time->modify('+1 day');
+$time2->format('Y-m-d H:i:s', 'America/Detroit');
 // '1999-04-01 18:15:00'
 
-$time->add(new TimeInterval('P2D'))->format('Y-m-d H:i:s', 'America/Detroit');
+$time3 = $time->add(new TimeInterval('P2D'))
+$time3->format('Y-m-d H:i:s', 'America/Detroit');
 // '1999-04-02 18:15:00'
 
-$time->sub(new TimeInterval('P2D'))->format('Y-m-d H:i:s', 'America/Detroit');
+$time4 = $time->sub(new TimeInterval('P2D'))
+$time4->format('Y-m-d H:i:s', 'America/Detroit');
 // '1999-03-29 18:15:00'
 
-$format = '%y years, %m months, %d days, %h hours, %i minutes';
-$time->diff(new TimePoint(1983, 12, 15, 21, 2, 0, 'America/Detroit'))->format($format);
+$time5 = $time->diff(new TimePoint(1983, 12, 15, 21, 2, 0, 'America/Detroit'))
+$time5->format('%y years, %m months, %d days, %h hours, %i minutes');
 // '15 years, 3 months, 15 days, 21 hours, 13 minutes'
 ```
 
@@ -191,14 +226,18 @@ properties normally available on DateInterval (in favor of the format() function
 represent a fixed range of time (ie 1 month, 3 days and 7 hours). It is usually used in conjunction with **TimePoint**
 and **TimePeriod** for calculations.
 
-Please see [DateInterval::__construct](http://php.net/manual/en/dateinterval.construct.php) for details on the
-format of the **interval spec**.
+The format of time intervals conform to [ISO 8601 Time Intervals](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).
+Also see [DateInterval::__construct](http://php.net/manual/en/dateinterval.construct.php) for more details on
+the **interval spec**.
 
 ```php
 use QL\MCP\Common\Time\TimeInterval;
 
 // The interval spec is the exact same as PHP's DateInterval
 $int = new TimeInterval('P1M3DT7H');
+
+echo $interval->format("%d days %h hours\n");
+// "3 days 7 hours"
 ```
 
 ### TimePeriod
@@ -206,9 +245,8 @@ $int = new TimeInterval('P1M3DT7H');
 Wraps the native PHP [DatePeriod](http://php.net/DatePeriod) class. This class represents a way to iterate over a set
 of date/times that occur at fixed intervals.
 
-The native PHP class has a strange overloaded __construct() on [DatePeriod](http://php.net/DatePeriod) that is actually
-not possible to actually write in the PHP language. As a result, this wrapper exposes one of the creation options as
-a public static factory method.
+The native PHP class `DatePeriod::__construct()` is overloaded and is actually not possible to write in userland PHP.
+As a result, this wrapper exposes one of the creation options as a public static factory method.
 
 ```php
 use QL\MCP\Common\Time\TimeInterval;
@@ -217,17 +255,19 @@ use QL\MCP\Common\Time\TimePoint;
 
 $start = new TimePoint(2012, 1, 1, 0, 0, 0, "America/Detroit");
 $interval = new TimeInterval('P1W');
+
 $end = new TimePoint(2012, 2, 1, 0, 0, 0, "America/Detroit");
-$recurrences = 5;
 
 $period0 = new TimePeriod($start, $interval, $end);
-$period1 = TimePeriod::createWithRecurrences($start, $interval, $recurrences);
-
 foreach ($period0 as $timePoint) {
     echo $timePoint->format("Y-m-d\n", "America/Detroit");
 }
 
 echo "\n";
+
+$recurrences = 5;
+
+$period1 = TimePeriod::createWithRecurrences($start, $interval, $recurrences);
 foreach ($period1 as $timePoint) {
     echo $timePoint->format("Y-m-d\n", "America/Detroit");
 }
@@ -255,6 +295,8 @@ Note that `$period0` and `$period1` are copies of the same time period, just con
 
 Opaque Property is used to obscure secrets while in memory. This is useful to protect sensitive values from debug
 output such as stacktraces or mistaken `echo` or `var_dump` commands.
+
+*Please note this class requires PHP7 or `paragonie/random_compat`.*
 
 ```php
 use QL\MCP\Common\OpaqueProperty;

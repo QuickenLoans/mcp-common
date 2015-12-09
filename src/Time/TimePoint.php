@@ -33,7 +33,7 @@ use Exception as BaseException;
  * $time->compare(new TimePoint(1983, 12, 15, 21, 2, 0, 'America/Detroit'));
  * // -1
  *
- * // the format string is exactly the same as DateTime->format(). Note the *required* timezone argument.
+ * // the format string is exactly the same as DateTime->format(). Note the required timezone argument.
  * $time->format('Y-m-d H:i:s', 'UTC');
  * // '1999-03-31 23:15:00'
  *

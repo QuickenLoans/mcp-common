@@ -3,6 +3,7 @@
     "description": "Common library for Quicken Loans PHP projects",
 
     "type": "library",
+    "keywords": [ "mcp", "quickenloans" ],
     "license": "MIT",
     "authors": [
         {
