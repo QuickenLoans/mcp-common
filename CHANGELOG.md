@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file. See
       [PSR7](https://github.com/php-fig/http-message) UriInterface instead.
 
 ## Changed
-- Change name from **MCP Core** to **MCP Common**
+- Change name from **MCP Core** to **MCP Common**.
 - Change namespace from `MCP\Core\...` to `QL\MCP\Common\...`.
 
 ## [MCP Core 1.0.3] - 2015-08-11

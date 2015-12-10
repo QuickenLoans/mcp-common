@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/quickenloans-mcp/mcp-common.png)](https://travis-ci.org/quickenloans-mcp/mcp-common)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/quickenloans-mcp/mcp-common/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/quickenloans-mcp/mcp-common/?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/ql/mcp-common/v/stable.png)](https://packagist.org/packages/ql/mcp-common)
+[![Latest Stable Version](https://poser.pugx.org/ql/mcp-common/version)](https://packagist.org/packages/ql/mcp-common)
 [![License](https://poser.pugx.org/ql/mcp-common/license)](https://packagist.org/packages/ql/mcp-common)
 
 This package provides common code, utilities, and data types used by most other MCP or Quicken Loans PHP packages.
