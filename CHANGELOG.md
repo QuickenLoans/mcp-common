@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
-## [1.0.0] - 2015-12-??
+## [1.0.0] - 2015-12-10
 
 ## Added
 - Add **OpaqueProperty**.
@@ -15,7 +15,13 @@ All notable changes to this project will be documented in this file. See
     - Should be used by crypto-related functions for safety.
 - Add **MemoryLogger** from `ql/mcp-panthor` **TestLogger** to help introspect log messages in unit tests.
 
+## Removed
+- Remove **HttpUrl**
+    - Please use [ql/uri-template](https://github.com/QuickenLoans/uri-template) or
+      [PSR7](https://github.com/php-fig/http-message) UriInterface instead.
+
 ## Changed
-- Changed name from **MCP Core** to **MCP Common** and namespace changed to `QL\MCP\Common\...`.
+- Change name from **MCP Core** to **MCP Common**
+- Change namespace from `MCP\Core\...` to `QL\MCP\Common\...`.
 
 ## [MCP Core 1.0.3] - 2015-08-11
