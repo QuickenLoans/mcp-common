@@ -11,7 +11,7 @@ This package provides common code, utilities, and data types used by most other 
 ## Installation
 
 ```
-composer require mcp-common ~1.0
+composer require ql/mcp-common ~1.0
 ```
 
 ## Table of Contents

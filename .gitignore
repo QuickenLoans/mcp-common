@@ -1,5 +1,7 @@
-/phpunit
+# testing
+/.phpunit/
 /phpunit.xml
 
-/vendor/
+# package installation
 /composer.lock
+/vendor/
