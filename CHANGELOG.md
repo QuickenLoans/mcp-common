@@ -7,10 +7,15 @@ All notable changes to this project will be documented in this file. See
 ## Added
 - **GUID** now supports formatting flags when using `$guid->format($flags = 0);`.
     - The default is lowercase, without hypens or braces.
-    - Added `GUID::FORMAT_DEFAULT`
-    - Added `GUID::FORMAT_BRACES`
-    - Added `GUID::FORMAT_HYPENATED`
-    - Added `GUID::FORMAT_UPPERCASE`
+    - Added `GUID::BRACES`
+    - Added `GUID::HYPENATED`
+    - Added `GUID::UPPERCASE`
+    - Added `GUID::STANDARD`
+        - The default if no arguments are provided.
+        - Example: `9a39ed24175244599ac26b0e8f0dcec7`
+    - Added `GUID::READABLE`
+        - Same as `$guid->asHumanReadable()`
+        - Example: `{9A39ED24-1752-4459-9AC2-6B0E8F0DCEC7}`
 
 ## [1.0.0] - 2015-12-10
 
