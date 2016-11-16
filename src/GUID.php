@@ -43,12 +43,12 @@ class GUID implements JsonSerializable
     /**
      * @type string[]
      */
-    private static $searchChars = ['{', '-', '}', 'a', 'b', 'c', 'd', 'e', 'f'];
+    protected static $searchChars = ['{', '-', '}', 'a', 'b', 'c', 'd', 'e', 'f'];
 
     /**
      * @type string[]
      */
-    private static $replaceChars = ['', '', '', 'A', 'B', 'C', 'D', 'E', 'F'];
+    protected static $replaceChars = ['', '', '', 'A', 'B', 'C', 'D', 'E', 'F'];
 
     /**
      * @type string
@@ -140,7 +140,7 @@ class GUID implements JsonSerializable
      *
      * @return bool
      */
-    private static function validate($guid)
+    protected static function validate($guid)
     {
         if (ByteString::strlen($guid) !== 16) {
             return false;
@@ -169,14 +169,6 @@ class GUID implements JsonSerializable
     private function __construct($bin)
     {
         $this->guid = $bin;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->format(self::READABLE);
     }
 
     /**
@@ -238,6 +230,14 @@ class GUID implements JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->format(static::READABLE);
+    }
+
+    /**
      * Serialize as a JSON string in human-readable form.
      *
      * Example:
@@ -253,7 +253,7 @@ class GUID implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->format(self::READABLE);
+        return $this->format(static::READABLE);
     }
 
     /**
@@ -277,7 +277,7 @@ class GUID implements JsonSerializable
      */
     public function asHumanReadable()
     {
-        return $this->format(self::READABLE);
+        return $this->format(static::READABLE);
     }
 
     /**
