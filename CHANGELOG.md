@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
+## [1.1.0] - 2016-11-16
+
+## Added
+- **GUID** now supports formatting flags when using `$guid->format($flags = 0);`.
+    - The default is lowercase, without hypens or braces.
+    - Added `GUID::FORMAT_DEFAULT`
+    - Added `GUID::FORMAT_BRACES`
+    - Added `GUID::FORMAT_HYPENATED`
+    - Added `GUID::FORMAT_UPPERCASE`
+
 ## [1.0.0] - 2015-12-10
 
 ## Added

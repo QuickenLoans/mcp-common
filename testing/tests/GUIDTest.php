@@ -140,6 +140,19 @@ class GUIDTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, json_encode($guid));
     }
 
+    public function testCustomFormatted()
+    {
+        $guid = GUID::createFromHex('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7');
+
+        $this->assertSame('9A39ED24175244599AC26B0E8F0DCEC7', $guid->format(GUID::UPPERCASE));
+        $this->assertSame('{9A39ED24175244599AC26B0E8F0DCEC7}', $guid->format(GUID::UPPERCASE | GUID::BRACES));
+        $this->assertSame('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7', $guid->format(GUID::HYPENATED));
+        $this->assertSame('9a39ed24175244599ac26b0e8f0dcec7', $guid->format(0));
+
+        $this->assertSame('9a39ed24175244599ac26b0e8f0dcec7', $guid->format(GUID::STANDARD));
+        $this->assertSame('{9A39ED24-1752-4459-9AC2-6B0E8F0DCEC7}', $guid->format(GUID::READABLE));
+    }
+
     /**
      * @return array
      */

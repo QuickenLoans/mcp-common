@@ -31,6 +31,15 @@ use QL\MCP\Common\Utility\ByteString;
  */
 class GUID implements JsonSerializable
 {
+    const STANDARD = 0;
+    const HYPENATED = 0x8;
+    const UPPERCASE = 0x10;
+    const BRACES = 0x20;
+
+    const READABLE = self::HYPENATED | self::UPPERCASE | self::BRACES;
+
+    const SEPERATOR_HYPHEN = '-';
+
     /**
      * @type string[]
      */
@@ -167,7 +176,65 @@ class GUID implements JsonSerializable
      */
     public function __toString()
     {
-        return $this->asHumanReadable();
+        return $this->format(self::READABLE);
+    }
+
+    /**
+     * Outputs a 'formatted' version of the GUID string
+     *
+     * The formatting will currently output something like "{74EC705A-AD08-42A6-BCC5-5B9F93FAB0F4}" as the GUID
+     * representation.
+     *
+     * Example:
+     *
+     * ```php
+     * $guid = GUID::createFromHex('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7');
+     *
+     * echo $guid->format();
+     * 9a39ed24175244599ac26b0e8f0dcec7
+     *
+     * echo $guid->format(GUID::FORMAT_BRACES | GUID::FORMAT_UPPERCASE);
+     * {9a39ed24175244599ac26b0e8f0dcec7}
+     *
+     * echo $guid->format(0);
+     * 9a39ed24175244599ac26b0e8f0dcec7
+     * ```
+     *
+     * @param int $format
+     *
+     * @return string
+     */
+    public function format($format = self::STANDARD)
+    {
+        $hexStr = strtolower($this->asHex());
+
+        $parts = [
+            substr($hexStr, 0, 8),
+            substr($hexStr, 8, 4),
+            substr($hexStr, 12, 4),
+            substr($hexStr, 16, 4),
+            substr($hexStr, 20)
+        ];
+
+        if ($format & self::UPPERCASE) {
+            $parts = array_map(function($v) {
+                return strtoupper($v);
+            }, $parts);
+        }
+
+
+        $separator = '';
+        if ($format & self::HYPENATED) {
+            $separator = self::SEPERATOR_HYPHEN;
+        }
+
+        $formatted = implode($separator, $parts);
+
+        if ($format & self::BRACES) {
+            $formatted = sprintf('{%s}', $formatted);
+        }
+
+        return $formatted;
     }
 
     /**
@@ -181,10 +248,12 @@ class GUID implements JsonSerializable
      *
      * "{9A39ED24-1752-4459-9AC2-6B0E8F0DCEC7}"
      * ```
+     *
+     * @return string
      */
     public function jsonSerialize()
     {
-        return $this->asHumanReadable();
+        return $this->format(self::READABLE);
     }
 
     /**
@@ -193,18 +262,22 @@ class GUID implements JsonSerializable
      * The formatting will currently output something like "{74EC705A-AD08-42A6-BCC5-5B9F93FAB0F4}" as the GUID
      * representation.
      *
+     * Example:
+     *
+     * ```php
+     * $guid = GUID::createFromHex('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7');
+     *
+     * echo $guid->asHumanReadable();
+     * {9A39ED24-1752-4459-9AC2-6B0E8F0DCEC7}
+     * ```
+     *
+     * @param int $format
+     *
      * @return string
      */
     public function asHumanReadable()
     {
-        $hexStr = $this->asHex();
-        $part1 = substr($hexStr, 0, 8);
-        $part2 = substr($hexStr, 8, 4);
-        $part3 = substr($hexStr, 12, 4);
-        $part4 = substr($hexStr, 16, 4);
-        $part5 = substr($hexStr, 20);
-
-        return sprintf('{%s-%s-%s-%s-%s}', $part1, $part2, $part3, $part4, $part5);
+        return $this->format(self::READABLE);
     }
 
     /**
@@ -212,6 +285,14 @@ class GUID implements JsonSerializable
      *
      * The string will look something like "74EC705AAD0842A6BCC55B9F93FAB0F4".
      *
+     * Example:
+     *
+     * ```php
+     * $guid = GUID::createFromHex('9a39ed24-1752-4459-9ac2-6b0e8f0dcec7');
+     *
+     * echo $guid->asHex();
+     * 9A39ED24175244599AC26B0E8F0DCEC7
+     * ```
      * @return string
      */
     public function asHex()
