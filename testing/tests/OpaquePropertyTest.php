@@ -38,12 +38,13 @@ class OpaquePropertyTest extends PHPUnit_Framework_TestCase
 
     public function testVarDumpedWithoutDebugInfo()
     {
-        $expected55 = <<<'VARDUMP'
-  private $value =>
-  string(10)
+        $expected = <<<'VARDUMP'
+  ["value"]=>
+  string(17) "[opaque property]"
+  ["bytes"]=>
+  int(10)
 VARDUMP;
-
-        $expected56 = <<<'VARDUMP'
+        $expectedWithXDebug = <<<'VARDUMP'
   public $value =>
   string(17) "[opaque property]"
   public $bytes =>
@@ -59,10 +60,8 @@ VARDUMP;
         var_dump($prop);
         $vardumped = trim(ob_get_clean());
 
-        if (PHP_VERSION_ID >= 50600) {
-            $expected = $expected56;
-        } else {
-            $expected = $expected55;
+        if (extension_loaded('xdebug')) {
+            $expected = $expectedWithXDebug;
         }
 
         $this->assertContains($expected, $vardumped);

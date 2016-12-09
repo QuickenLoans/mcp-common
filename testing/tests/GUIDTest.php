@@ -19,6 +19,8 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     {
         $expected = $outputHex;
         $guid = GUID::createFromHex($inputHex);
+        $this->assertInstanceOf(GUID::class, $guid);
+
         $actual = $guid->asHex();
         $this->assertSame($expected, $actual);
     }
@@ -26,10 +28,12 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider validGuids
      */
-    public function testAllBase64InputStringsConstructGuidCorrectly($inputHex, $inputB64, $binary, $outputB64, $outputHex, $outputHuman)
+    public function testAllBase64InputStringsConstructGuidCorrectly($inputHex, $inputB64, $testAllBinaryStringsConstructGuidCorrectly, $outputB64, $outputHex, $outputHuman)
     {
         $expected = $outputHex;
         $guid = GUID::createFromBase64($inputB64);
+        $this->assertInstanceOf(GUID::class, $guid);
+
         $actual = $guid->asHex();
         $this->assertSame($expected, $actual);
     }
@@ -41,6 +45,8 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     {
         $expected = $outputHex;
         $guid = GUID::createFromBin($binary);
+        $this->assertInstanceOf(GUID::class, $guid);
+
         $actual = $guid->asHex();
         $this->assertSame($expected, $actual);
     }
@@ -52,6 +58,8 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     {
         $expected = $outputB64;
         $guid = GUID::createFromBin($binary);
+        $this->assertInstanceOf(GUID::class, $guid);
+
         $actual = $guid->asBase64();
         $this->assertSame($expected, $actual);
     }
@@ -63,6 +71,8 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     {
         $expected = $outputHuman;
         $guid = GUID::createFromBin($binary);
+        $this->assertInstanceOf(GUID::class, $guid);
+
         $actual = $guid->asHumanReadable();
         $this->assertSame($expected, $actual);
     }
@@ -74,6 +84,8 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     {
         $expected = $outputHuman;
         $guid = GUID::createFromBin($binary);
+        $this->assertInstanceOf(GUID::class, $guid);
+
         $actual = (string) $guid;
         $this->assertSame($expected, $actual);
     }
@@ -86,6 +98,8 @@ class GUIDTest extends PHPUnit_Framework_TestCase
     {
         $expected = $binary;
         $guid = GUID::createFromBin($binary);
+        $this->assertInstanceOf(GUID::class, $guid);
+
         $actual = $guid->asBin();
         $this->assertSame($expected, $actual);
     }
@@ -171,10 +185,10 @@ class GUIDTest extends PHPUnit_Framework_TestCase
         return array(
             //    input hex format,                         input base64 format,        binary,                                         output base64 format,     output hex format,                  output human readable
             array('{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}', 'DIdf/GGrSnWkr1+Jrc4NYw==', pack('H*', '0C875FFC61AB4A75A4AF5F89ADCE0D63'), 'DIdf/GGrSnWkr1+Jrc4NYw', '0C875FFC61AB4A75A4AF5F89ADCE0D63', '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'),
-            array('{870e91a0-e54d-477a-85ec-1666d7be3c4c}', 'hw6RoOVNR3qF7BZm1748TA=',  pack('H*', '870E91A0E54D477A85EC1666D7BE3C4C'), 'hw6RoOVNR3qF7BZm1748TA', '870E91A0E54D477A85EC1666D7BE3C4C', '{870E91A0-E54D-477A-85EC-1666D7BE3C4C}'),
+            array('{870e91a0-e54d-477a-85ec-1666d7be3c4c}', 'hw6RoOVNR3qF7BZm1748TA==',  pack('H*', '870E91A0E54D477A85EC1666D7BE3C4C'), 'hw6RoOVNR3qF7BZm1748TA', '870E91A0E54D477A85EC1666D7BE3C4C', '{870E91A0-E54D-477A-85EC-1666D7BE3C4C}'),
             array('{A941FCAAEC34403BA7D0B6D837AF5535}',     'qUH8quw0QDun0LbYN69VNQ',   pack('H*', 'A941FCAAEC34403BA7D0B6D837AF5535'), 'qUH8quw0QDun0LbYN69VNQ', 'A941FCAAEC34403BA7D0B6D837AF5535', '{A941FCAA-EC34-403B-A7D0-B6D837AF5535}'),
             array('{8314700199e14ea4a4d6bf9b8fbef486}',     'gxRwAZnhTqSk1r+bj770hg==', pack('H*', '8314700199E14EA4A4D6BF9B8FBEF486'), 'gxRwAZnhTqSk1r+bj770hg', '8314700199E14EA4A4D6BF9B8FBEF486', '{83147001-99E1-4EA4-A4D6-BF9B8FBEF486}'),
-            array('54F45675-9A56-4967-AF24-2F3F0E8468F7',   'VPRWdZpWSWevJC8/DoRo9w=',  pack('H*', '54F456759A564967AF242F3F0E8468F7'), 'VPRWdZpWSWevJC8/DoRo9w', '54F456759A564967AF242F3F0E8468F7', '{54F45675-9A56-4967-AF24-2F3F0E8468F7}'),
+            array('54F45675-9A56-4967-AF24-2F3F0E8468F7',   'VPRWdZpWSWevJC8/DoRo9w==',  pack('H*', '54F456759A564967AF242F3F0E8468F7'), 'VPRWdZpWSWevJC8/DoRo9w', '54F456759A564967AF242F3F0E8468F7', '{54F45675-9A56-4967-AF24-2F3F0E8468F7}'),
             array('33f46a60-9cc7-4a4e-9927-d7e3fc92bbe9',   'M/RqYJzHSk6ZJ9fj/JK76Q',   pack('H*', '33F46A609CC74A4E9927D7E3FC92BBE9'), 'M/RqYJzHSk6ZJ9fj/JK76Q', '33F46A609CC74A4E9927D7E3FC92BBE9', '{33F46A60-9CC7-4A4E-9927-D7E3FC92BBE9}'),
             array('4FF9746ABAEE4FA3973BB3B740E3812A',       'T/l0arruT6OXO7O3QOOBKg==', pack('H*', '4FF9746ABAEE4FA3973BB3B740E3812A'), 'T/l0arruT6OXO7O3QOOBKg', '4FF9746ABAEE4FA3973BB3B740E3812A', '{4FF9746A-BAEE-4FA3-973B-B3B740E3812A}'),
             array('b4ca6d3610eb4bfaa8c52b45441d2e01',       'tMptNhDrS/qoxStFRB0uAQ==', pack('H*', 'B4CA6D3610EB4BFAA8C52B45441D2E01'), 'tMptNhDrS/qoxStFRB0uAQ', 'B4CA6D3610EB4BFAA8C52B45441D2E01', '{B4CA6D36-10EB-4BFA-A8C5-2B45441D2E01}'),
