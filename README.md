@@ -65,13 +65,13 @@ $guid9 = GUID::createFromBase64('T/l0arruT6OXO7O3QOOBKg==');
 
 $guid = GUID::createFromHex('{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}');
 
-$guid->asHex();                 // '0C875FFC61AB4A75A4AF5F89ADCE0D63'
-$guid->asBin();                 // pack('H*', '0C875FFC61AB4A75A4AF5F89ADCE0D63')
-$guid->asBase64();              // 'DIdf/GGrSnWkr1+Jrc4NYw'
-$guid->asHumanReadable();       // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
-$guid->format(GUID::HYPENATED); // '{0c875ffc-61ab-4a75-a4af-5f89adce0d63}'
+$guid->asHex();                  // '0C875FFC61AB4A75A4AF5F89ADCE0D63'
+$guid->asBin();                  // pack('H*', '0C875FFC61AB4A75A4AF5F89ADCE0D63')
+$guid->asBase64();               // 'DIdf/GGrSnWkr1+Jrc4NYw'
+$guid->asHumanReadable();        // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
+$guid->format(GUID::HYPHENATED); // '{0c875ffc-61ab-4a75-a4af-5f89adce0d63}'
 
-echo $guid;                     // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
+echo $guid;                      // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
 ```
 
 ### IPv4Address
