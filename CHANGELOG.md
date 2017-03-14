@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
+## [1.1.1] - 2017-03-14
+
+## Changed
+- Fixed spelling of formatting constant in **GUID** type.
+    - Added `GUID::HYPHENATED`
+    - `GUID::HYPENATED` is deprecated and should not be used.
+
 ## [1.1.0] - 2016-11-16
 
 ## Added
