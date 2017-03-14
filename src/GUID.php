@@ -32,11 +32,12 @@ use QL\MCP\Common\Utility\ByteString;
 class GUID implements JsonSerializable
 {
     const STANDARD = 0;
-    const HYPENATED = 0x8;
+    const HYPENATED = 0x8; // Remains for backwards compatibility
+    const HYPHENATED = 0x8;
     const UPPERCASE = 0x10;
     const BRACES = 0x20;
 
-    const READABLE = self::HYPENATED | self::UPPERCASE | self::BRACES;
+    const READABLE = self::HYPHENATED | self::UPPERCASE | self::BRACES;
 
     const SEPERATOR_HYPHEN = '-';
 
@@ -216,7 +217,7 @@ class GUID implements JsonSerializable
 
 
         $separator = '';
-        if ($format & self::HYPENATED) {
+        if ($format & self::HYPHENATED) {
             $separator = self::SEPERATOR_HYPHEN;
         }
 
