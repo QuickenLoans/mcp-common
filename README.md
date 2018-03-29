@@ -1,10 +1,9 @@
+[![CircleCI](https://img.shields.io/circleci/project/github/quickenloans-mcp/mcp-common.svg?label=circleci)](https://circleci.com/gh/quickenloans-mcp/mcp-common)
+[![Latest Stable Version](https://img.shields.io/packagist/v/ql/mcp-common.svg?label=stable)](https://packagist.org/packages/ql/mcp-common)
+[![GitHub License](https://img.shields.io/github/license/quickenloans-mcp/mcp-common.svg)](https://packagist.org/packages/ql/mcp-common)
+![GitHub Language](https://img.shields.io/github/languages/top/quickenloans-mcp/mcp-common.svg)
 
 # MCP Common
-
-[![Build Status](https://travis-ci.org/quickenloans-mcp/mcp-common.png)](https://travis-ci.org/quickenloans-mcp/mcp-common)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/quickenloans-mcp/mcp-common/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/quickenloans-mcp/mcp-common/?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/ql/mcp-common/version)](https://packagist.org/packages/ql/mcp-common)
-[![License](https://poser.pugx.org/ql/mcp-common/license)](https://packagist.org/packages/ql/mcp-common)
 
 This package provides common code, utilities, and data types used by most other MCP or Quicken Loans PHP packages.
 
