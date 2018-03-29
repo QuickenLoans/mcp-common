@@ -42,13 +42,13 @@ workflows:
                 requires: [ install_php_dependencies ]
 
             - unit_tests_70:
-                requires: [ static_analysis ]
+                requires: [ linting ]
 
             - unit_tests_71:
-                requires: [ static_analysis ]
+                requires: [ linting ]
 
             - unit_tests_72:
-                requires: [ static_analysis ]
+                requires: [ linting ]
 
 jobs:
     fetch_code:
@@ -86,6 +86,7 @@ jobs:
                 command: |
                     vendor/bin/phpstan analyse \
                     -l 2 \
+                    -c phpstan.neon src \
                     --memory-limit=1G \
                     src
 

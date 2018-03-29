@@ -89,7 +89,7 @@ class TimePoint implements JsonSerializable
         }
 
         $this->date = $date;
-        $this->date->setTimeZone(new DateTimeZone('UTC'));
+        $this->date->setTimezone(new DateTimeZone('UTC'));
     }
 
     /**
@@ -142,7 +142,7 @@ class TimePoint implements JsonSerializable
     public function format($format, $timezone)
     {
         $date = clone $this->date;
-        $date->setTimeZone(new DateTimeZone($timezone));
+        $date->setTimezone(new DateTimeZone($timezone));
         return $date->format($format);
     }
 

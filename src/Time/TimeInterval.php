@@ -127,7 +127,7 @@ class TimeInterval
     /**
      * Parse the spec into the standard DateInterval spec, and our extra data spec
      *
-     * @param string
+     * @param string $intervalSpec
      *
      * @return array
      */

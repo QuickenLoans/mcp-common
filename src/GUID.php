@@ -210,11 +210,10 @@ class GUID implements JsonSerializable
         ];
 
         if ($format & self::UPPERCASE) {
-            $parts = array_map(function($v) {
+            $parts = array_map(function ($v) {
                 return strtoupper($v);
             }, $parts);
         }
-
 
         $separator = '';
         if ($format & self::HYPHENATED) {
@@ -271,8 +270,6 @@ class GUID implements JsonSerializable
      * echo $guid->asHumanReadable();
      * {9A39ED24-1752-4459-9AC2-6B0E8F0DCEC7}
      * ```
-     *
-     * @param int $format
      *
      * @return string
      */

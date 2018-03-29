@@ -140,7 +140,6 @@ class Clock
     public function fromString($input, $format = null)
     {
         if ($format === null) {
-
             $formats = [
                 'Y-m-d\TH:i:sP',        // RFC 3339
                 'Y-m-d\TH:i:s.uP',      // RFC 3339 with fractional seconds (lost precision)

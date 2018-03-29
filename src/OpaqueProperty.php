@@ -124,7 +124,6 @@ class OpaqueProperty
 
         // Parse the string byte by byte and xor against noise
         while ($currentByte <= $inputSize) {
-
             $byte = $input[$currentByte];
             $noiseByte = $noise[($currentByte % $noiseSize) + 1];
             $xordByte = $byte ^ $noiseByte;
