@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
+## [1.2.0] - 2018-03-28
+## Changed
+- This library now requires PHP 7.0 or higher.
+
 ## [1.1.1] - 2017-03-14
 
 ## Changed
