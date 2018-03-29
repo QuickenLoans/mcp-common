@@ -109,7 +109,7 @@ jobs:
             - *attach_workspace
             - run:
                 name: 'Run unit tests'
-                command: 'phpdbg -qrr  vendor/bin/phpunit'
+                command: 'phpdbg -qrr vendor/bin/phpunit'
 
     unit_tests_71:
         <<: *php71_defaults
@@ -117,7 +117,7 @@ jobs:
             - *attach_workspace
             - run:
                 name: 'Run unit tests'
-                command: 'phpdbg -qrr  vendor/bin/phpunit'
+                command: 'phpdbg -qrr vendor/bin/phpunit'
 
     unit_tests_72:
         <<: *php72_defaults
@@ -125,6 +125,6 @@ jobs:
             - *attach_workspace
             - run:
                 name: 'Run unit tests'
-                command: 'phpdbg -qrr  vendor/bin/phpunit'
+                command: 'phpdbg -qrr vendor/bin/phpunit'
             - store_test_results:
                 path: '.phpunit/report'
