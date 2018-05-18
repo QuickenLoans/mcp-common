@@ -7,10 +7,10 @@
 
 namespace QL\MCP\Common;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use QL\MCP\Common\Testing\GUIDExtendedMock;
 
-class GUIDTest extends PHPUnit_Framework_TestCase
+class GUIDTest extends TestCase
 {
     /**
      * @dataProvider validGuids

@@ -10,8 +10,9 @@ namespace QL\MCP\Common\Time;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
-use JsonSerializable;
 use Exception as BaseException;
+use JsonSerializable;
+use QL\MCP\Common\Exception;
 
 /**
  * A point in time.
@@ -77,7 +78,7 @@ class TimePoint implements JsonSerializable
      *
      * @throws Exception
      */
-    public function __construct($year, $month, $day, $hour, $minute, $second, $timezone)
+    public function __construct($year, $month, $day, $hour = 0, $minute = 0, $second = 0, $timezone = 'UTC')
     {
         $inputFormat = '%04d-%02d-%02d %02d:%02d:%02d';
 

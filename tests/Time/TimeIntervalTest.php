@@ -7,32 +7,25 @@
 
 namespace QL\MCP\Common\Time;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use QL\MCP\Common\Exception;
 
-class TimeIntervalTest extends PHPUnit_Framework_TestCase
+class TimeIntervalTest extends TestCase
 {
     public function testIntervalSpecIsSavedFromConstruction()
     {
         $input = 'P2W';
+
         $tint = new TimeInterval($input);
         $this->assertSame($input, $tint->intervalSpec());
     }
 
     public function testBadIntervalSpecThrowsException()
     {
-        $this->setExpectedException(Exception::CLASS);
+        $this->expectException(Exception::class);
+
         $input = 'bad interval format';
         new TimeInterval($input);
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error_Warning
-     */
-    public function testBadFormatSpecThrowsException()
-    {
-        $input = array();
-        $tint = new TimeInterval('P2W');
-        $tint->format($input);
     }
 
     public function testGoodFormatterSpec()

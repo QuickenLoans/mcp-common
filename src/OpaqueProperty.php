@@ -8,6 +8,7 @@
 namespace QL\MCP\Common;
 
 use QL\MCP\Common\Utility\ByteString;
+use function random_bytes;
 
 /**
  * This wraps string values so they are obscured while in memory, in the case of stacktrace var_dumps, etc.
@@ -35,19 +36,14 @@ use QL\MCP\Common\Utility\ByteString;
  * // "my_secret_token"
  * ```
  *
- * Please note this requires "random_bytes" provided by PHP 7.0 or paragonie/random_compat.
- * @see http://php.net/manual/en/function.random-bytes.php
- *
  * Inspiration and reference:
  * @see https://github.com/phacility/libphutil/blob/master/src/error/PhutilOpaqueEnvelope.php
  */
 class OpaqueProperty
 {
-    const FQDN_RANDOMBYTES = '\random_bytes';
     const SAFE_OUTPUT = '[opaque property]';
 
     const ERR_INVALID_TYPE = 'Could not obscure property of type "%s". Only strings can be stored.';
-    const ERR_CSPRNG = 'CSPRNG "random_bytes" not found. Please use PHP 7.0 or install paragonie/random_compat.';
 
     /**
      * Obscured property
@@ -68,10 +64,6 @@ class OpaqueProperty
      */
     public function __construct($value)
     {
-        if (!function_exists(self::FQDN_RANDOMBYTES)) {
-            throw new Exception(self::ERR_CSPRNG);
-        }
-
         if (!is_string($value)) {
             throw new Exception(sprintf(self::ERR_INVALID_TYPE, gettype($value)));
         }
@@ -82,7 +74,7 @@ class OpaqueProperty
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->mask($this->value, self::getNoise());
     }
@@ -90,13 +82,13 @@ class OpaqueProperty
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return self::SAFE_OUTPUT;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function __debugInfo()
     {
@@ -136,12 +128,12 @@ class OpaqueProperty
     }
 
     /**
-     * @return string
+     * @return array
      */
     protected static function getNoise()
     {
         if (static::$noise === null) {
-            $rand = \random_bytes(128);
+            $rand = random_bytes(128);
             static::$noise = unpack('C*', $rand);
         }
 

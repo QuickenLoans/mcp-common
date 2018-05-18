@@ -7,9 +7,9 @@
 
 namespace QL\MCP\Common\Utility;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ByteStringTest extends PHPUnit_Framework_TestCase
+class ByteStringTest extends TestCase
 {
     /**
      * @dataProvider providerStringLengths

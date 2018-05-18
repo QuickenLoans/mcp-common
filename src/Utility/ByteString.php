@@ -93,7 +93,7 @@ class ByteString
      * @param int $start
      * @param int $length
      *
-     * @return int
+     * @return string
      */
     public static function substr($input, $start, $length = null)
     {

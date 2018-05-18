@@ -9,8 +9,9 @@ namespace QL\MCP\Common\Time;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\TestCase;
 
-class TimeUtilTest extends \PHPUnit_Framework_TestCase
+class TimeUtilTest extends TestCase
 {
     use TimeUtil;
 

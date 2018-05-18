@@ -7,20 +7,24 @@
 
 namespace QL\MCP\Common\Time;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use QL\MCP\Common\Exception;
 
-class TimePointTest extends PHPUnit_Framework_TestCase
+class TimePointTest extends TestCase
 {
     public function testConstructingInvalidTimeThrowsException()
     {
-        $this->setExpectedException(Exception::CLASS);
+        $this->expectException(Exception::class);
+
         new TimePoint(10193, 1, 1, 0, 0, 0, 'UTC');
     }
 
     public function testFormatStringPassesThrough()
     {
         $expected = '1983-12-15 14:02:42';
+
         $tp = new TimePoint(1983, 12, 15, 9, 2, 42, 'America/Detroit');
+
         $actual = $tp->format('Y-m-d H:i:s', 'UTC');
         $this->assertSame($expected, $actual);
     }
@@ -28,7 +32,9 @@ class TimePointTest extends PHPUnit_Framework_TestCase
     public function testModifyMethodCreatesNewTimePoint()
     {
         $expected = '2050-12-15 14:02:42';
+
         $tp = new TimePoint(1983, 12, 15, 9, 2, 42, 'America/Detroit');
+
         $tp = $tp->modify('+67 years');
         $actual = $tp->format('Y-m-d H:i:s', 'UTC');
         $this->assertSame($expected, $actual);
@@ -36,7 +42,8 @@ class TimePointTest extends PHPUnit_Framework_TestCase
 
     public function testModifyWithBadStringThrowsException()
     {
-        $this->setExpectedException(Exception::CLASS);
+        $this->expectException(Exception::class);
+
         $tp = new TimePoint(1945, 7, 16, 5, 29, 45, 'America/Denver');
         $tp->modify('bad string');
     }
@@ -44,8 +51,10 @@ class TimePointTest extends PHPUnit_Framework_TestCase
     public function testCompareNormalizesTimezones()
     {
         $expected = 1;
+
         $first = new TimePoint(1876, 3, 10, 0, 0, 0, 'America/Detroit');
         $second = new TimePoint(1876, 3, 10, 0, 0, 0, 'UTC');
+
         $actual = $first->compare($second);
         $this->assertSame($expected, $actual);
     }
@@ -53,8 +62,10 @@ class TimePointTest extends PHPUnit_Framework_TestCase
     public function testCompareSameTimePointsShouldShowAsEqual()
     {
         $expected = 0;
+
         $first = new TimePoint(1969, 7, 20, 20, 17, 0, 'UTC');
         $second = new TimePoint(1969, 7, 20, 20, 17, 0, 'UTC');
+
         $actual = $first->compare($second);
         $this->assertSame($expected, $actual);
     }
@@ -62,8 +73,10 @@ class TimePointTest extends PHPUnit_Framework_TestCase
     public function testCompareCloseTimePointsShouldShowNotEqual()
     {
         $expected = -1;
+
         $first = new TimePoint(1986, 1, 26, 11, 38, 0, 'America/Detroit');
         $second = new TimePoint(1986, 1, 26, 11, 39, 13, 'America/Detroit');
+
         $actual = $first->compare($second);
         $this->assertSame($expected, $actual);
     }
@@ -72,7 +85,9 @@ class TimePointTest extends PHPUnit_Framework_TestCase
     {
         $expected = new TimePoint(1775, 4, 19, 10, 0, 0, 'America/Detroit');
         $start = new TimePoint(1775, 4, 19, 6, 0, 0, 'America/Detroit');
+
         $int = new TimeInterval('PT4H');
+
         $actual = $start->add($int);
         $this->assertSame($expected->format('Y-m-d H:i:s', 'America/Detroit'), $actual->format('Y-m-d H:i:s', 'America/Detroit'));
     }
@@ -81,7 +96,9 @@ class TimePointTest extends PHPUnit_Framework_TestCase
     {
         $expected = new TimePoint(1963, 11, 22, 11, 30, 0, 'America/Detroit');
         $start = new TimePoint(1963, 11, 22, 12, 30, 0, 'America/Detroit');
+
         $int = new TimeInterval('PT1H');
+
         $actual = $start->sub($int);
         $this->assertSame($expected->format('Y-m-d H:i:s', 'America/Detroit'), $actual->format('Y-m-d H:i:s', 'America/Detroit'));
     }

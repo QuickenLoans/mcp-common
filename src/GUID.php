@@ -66,7 +66,7 @@ class GUID implements JsonSerializable
      *
      * @return GUID|null
      */
-    public static function createFromHex($hexString)
+    public static function createFromHex($hexString): ?GUID
     {
         $hexString = str_replace(static::$searchChars, static::$replaceChars, $hexString);
         if (!preg_match('/^[0-9A-Fa-f]{32}$/', $hexString)) {
@@ -86,7 +86,7 @@ class GUID implements JsonSerializable
      *
      * @return GUID|null
      */
-    public static function createFromBase64($base64String)
+    public static function createFromBase64($base64String): ?GUID
     {
         $bin = base64_decode($base64String, true);
         if (false === $bin) {
@@ -105,7 +105,7 @@ class GUID implements JsonSerializable
      *
      * @return GUID|null
      */
-    public static function createFromBin($binString)
+    public static function createFromBin($binString): ?GUID
     {
         if (!static::validate($binString)) {
             return null;
@@ -119,7 +119,7 @@ class GUID implements JsonSerializable
      *
      * @return GUID
      */
-    public static function create()
+    public static function create(): GUID
     {
         $guid = \random_bytes(16);
 

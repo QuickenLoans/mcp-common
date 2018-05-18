@@ -9,6 +9,7 @@ namespace QL\MCP\Common\Time;
 
 use DateInterval;
 use Exception as BaseException;
+use QL\MCP\Common\Exception;
 
 /**
  * Represents a time interval such as "2 weeks".

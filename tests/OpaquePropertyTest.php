@@ -7,10 +7,10 @@
 
 namespace QL\MCP\Common;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class OpaquePropertyTest extends PHPUnit_Framework_TestCase
+class OpaquePropertyTest extends TestCase
 {
     public function setUp()
     {
