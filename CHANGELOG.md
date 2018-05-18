@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
+## [2.0.0] - 2018-05-18
+## Changed
+- This library now requires PHP 7.1 or higher.
+- Moved `QL\MCP\Common\Time\Clock` to `QL\MCP\Common\Clock`
+- **Clock** now defaults to `UTC` instead of using the system timezone when no second parameter is provided.
+- **TimePoint** now has a default timezone of `UTC` and time of `00:00:00` (Date is still required).
+
+## Removed
+- Removed **MemoryLogger**
+- Removed **USAddress**
+- Removed **IPv4Address**
+    - Please use [darsyn/ip](https://github.com/darsyn/ip) instead.
+
 ## [1.2.0] - 2018-03-28
 ## Changed
 - This library now requires PHP 7.0 or higher.

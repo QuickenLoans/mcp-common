@@ -10,23 +10,20 @@ This package provides common code, utilities, and data types used by most other 
 ## Installation
 
 ```
-composer require ql/mcp-common ~1.0
+composer require ql/mcp-common ~2.0
 ```
 
 ## Table of Contents
 
 - [GUID](#guid)
-- [IPv4Address](#ipv4address)
-- [USAddress](#usaddress)
 - [OpaqueProperty](#opaqueproperty)
+- [Clock](#clock)
 - **Time**
-    - [Clock](#clock)
     - [TimePoint](#timepoint)
     - [TimeInterval](#timeinterval)
     - [TimePeriod](#timeperiod)
 - **Utility**
     - [ByteString](#bytestring)
-- [Dependency Injection Configuration](#dependency-injection-configuration)
 
 ### GUID
 
@@ -73,47 +70,6 @@ $guid->format(GUID::HYPHENATED); // '{0c875ffc-61ab-4a75-a4af-5f89adce0d63}'
 echo $guid;                      // '{0C875FFC-61AB-4A75-A4AF-5F89ADCE0D63}'
 ```
 
-### IPv4Address
-
-Represents an IPv4 address value.
-
-Assume for the sake of example that `www.example.com` resolves to the IP address `168.23.11.48`.
-
-```php
-use QL\MCP\Common\IPv4Address;
-
-$ipNoHost = IPv4Address::create('168.23.11.48');
-$ipWithHost = IPv4Address::createFromHostString('www.example.com');
-
-$ipNoHost->asInt();          // 2820410160
-$ipNoHost->asString();       // '168.23.11.48'
-$ipNoHost->originalHost();   // null
-$ipWithHost->asInt();        // 2820410160
-$ipWithHost->asString();     // '168.23.11.48'
-$ipWithHost->originalHost(); // 'www.example.com'
-
-// On 32 bit systems, asInt() works differently due to using ip2long() under the hood.
-$ipNoHost->asInt();          // -1474557136
-$ipWithHost->asInt();        // -1474557136
-```
-
-### USAddress
-
-Represents a US Address. This has no validation on it and is simply meant to make an address a 'type'. Validating an
-address should be done by an external service.
-
-```php
-use QL\MCP\Common\USAddress;
-
-$addr = new USAddress('1 Campus Martius', '', 'Detroit', 'MI', '48226');
-
-$addr->street1(); // '1 Campus Martius'
-$addr->street2(); // ''
-$addr->city();    // 'Detroit'
-$addr->state();   // 'MI'
-$addr->zip();     // '48226'
-```
-
 ### Clock
 
 Any time an application wants to **get the current time**, it is recommended that this class is used to do that instead
@@ -131,7 +87,7 @@ These Time classes were created before the creation of [DateTimeImmutable](http:
 Usage:
 
 ```php
-use QL\MCP\Common\Time\Clock;
+use QL\MCP\Common\Clock;
 
 $clock = new Clock;
 $currentTime = $clock->read();
@@ -143,7 +99,7 @@ If you want to see how a system operates at a specific **point in time**, the Cl
 than the system time or time zone. This is extremely useful for unit testing.
 
 ```php
-use QL\MCP\Common\Time\Clock;
+use QL\MCP\Common\Clock;
 
 // Set a clock up to December 15, 1983 at 9:02pm located in Detroit, MI
 $clock = new Clock('1983-12-15 21:02:00', 'America/Detroit');
@@ -157,7 +113,7 @@ The clock can also be used to parse datetimes from `DateTime` or strings.
 
 ```php
 use DateTime;
-use QL\MCP\Common\Time\Clock;
+use QL\MCP\Common\Clock;
 
 $clock = new Clock;
 
@@ -338,16 +294,3 @@ echo ByteString::substr($string, 6, 3);
 // "𐌁"
 // "f0908c81" in hex
 ```
-
-### Dependency Injection Configuration
-
-For convenience, a YAML configuration file is provided for use in symfony DI containers.
-
-To use: import the config file from your app's main configuration.
-
-```yaml
-imports:
-    - resource: ../vendor/ql/mcp-common/configuration/mcp-common.yml
-```
-
-This configuration provides the **Clock** as service `@mcp.common.clock`
