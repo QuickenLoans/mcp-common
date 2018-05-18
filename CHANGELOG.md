@@ -3,18 +3,23 @@ All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
 ## [2.0.0] - 2018-05-18
+## Added
+- Add microseconds to `TimePoint`.
+    - You can pass microseconds as the 7th argument: `new TimePoint($y, $m, $d, $h, $m, $s, 'UTC', 1234);`
+- Add `__toString` to **TimePoint** so you can now cast to a string: `echo (string) $timepoint;`
+
 ## Changed
 - This library now requires PHP 7.1 or higher.
 - Moved `QL\MCP\Common\Time\Clock` to `QL\MCP\Common\Clock`
 - **Clock** now defaults to `UTC` instead of using the system timezone when no second parameter is provided.
 - **TimePoint** now has a default timezone of `UTC` and time of `00:00:00` (Date is still required).
-- Add `__toString` to **TimePoint** so you can now cast to a string: `echo (string) $timepoint;`
 
 ## Removed
 - Removed **MemoryLogger**
 - Removed **USAddress**
 - Removed **IPv4Address**
     - Please use [darsyn/ip](https://github.com/darsyn/ip) instead.
+- Removed `configuration/mcp-common.yml`
 
 ## [1.2.0] - 2018-03-28
 ## Changed

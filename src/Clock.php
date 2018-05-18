@@ -143,10 +143,10 @@ class Clock
         if ($format === null) {
             $formats = [
                 'Y-m-d\TH:i:sP',        // RFC 3339
-                'Y-m-d\TH:i:s.uP',      // RFC 3339 with fractional seconds (lost precision)
+                'Y-m-d\TH:i:s.uP',      // RFC 3339 with fractional seconds
                 'Y-m-d\TH:i:sO',        // ISO 8601
-                'Y-m-d\TH:i:s.uO',      // ISO 8601 with fractional seconds and period (lost precision)
-                'Y-m-d\TH:i:s,uO',      // ISO 8601 with fractional seconds and comma (lost precision)
+                'Y-m-d\TH:i:s.uO',      // ISO 8601 with fractional seconds and period
+                'Y-m-d\TH:i:s,uO',      // ISO 8601 with fractional seconds and comma
                 'Y-m-d\TH:iO',          // ISO 8601 with no seconds
             ];
 

@@ -29,13 +29,24 @@ trait TimeUtil
      */
     private function timePointToDateTime(TimePoint $date)
     {
-        $parserFormat = '@^(\d+)-(\d+)-(\d+)-(\d+)-(\d+)-(\d+)$@';
-        $parsableFormat = 'Y-n-j-G-i-s';
-        $inputFormat = '%04d-%02d-%02d %02d:%02d:%02d';
+        $parserFormat = '@^(\d+)-(\d+)-(\d+)-(\d+)-(\d+)-(\d+)-(\d+)$@';
+        $parsableFormat = 'Y-n-j-G-i-s-u';
+
         $tz = new DateTimeZone('UTC');
         preg_match($parserFormat, $date->format($parsableFormat, 'UTC'), $t);
 
-        return new DateTime(sprintf($inputFormat, $t[1], $t[2], $t[3], $t[4], $t[5], $t[6]), $tz);
+        $format = sprintf(
+            '%04d-%02d-%02d %02d:%02d:%02d.%06d',
+            $t[1],
+            $t[2],
+            $t[3],
+            $t[4],
+            $t[5],
+            $t[6],
+            $t[7]
+        );
+
+        return new DateTime($format, $tz);
     }
 
     /**
@@ -73,7 +84,8 @@ trait TimeUtil
             $date->format('H'),
             $date->format('i'),
             $date->format('s'),
-            $date->getTimezone()->getName()
+            $date->getTimezone()->getName(),
+            $date->format('u')
         );
     }
 

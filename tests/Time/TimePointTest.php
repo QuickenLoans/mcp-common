@@ -19,6 +19,16 @@ class TimePointTest extends TestCase
         new TimePoint(10193, 1, 1, 0, 0, 0, 'UTC');
     }
 
+    public function testFormatWithDefaults()
+    {
+        $expected = '1983-12-15 00:00:00.000000';
+
+        $tp = new TimePoint(1983, 12, 15);
+
+        $actual = $tp->format('Y-m-d H:i:s.u', 'UTC');
+        $this->assertSame($expected, $actual);
+    }
+
     public function testFormatStringPassesThrough()
     {
         $expected = '1983-12-15 14:02:42';
@@ -151,7 +161,7 @@ class TimePointTest extends TestCase
 
     public function testJsonSerialize()
     {
-        $timepoint = new TimePoint(2015, 10, 10, 10, 10, 00, 'UTC');
+        $timepoint = new TimePoint(2015, 10, 10, 10, 10, 0, 'UTC');
         $output = json_encode($timepoint);
 
         $this->assertEquals('"2015-10-10T10:10:00Z"', $output);
@@ -160,9 +170,17 @@ class TimePointTest extends TestCase
 
     public function testToString()
     {
-        $timepoint = new TimePoint(2015, 10, 10, 10, 10, 00, 'UTC');
+        $timepoint = new TimePoint(2015, 10, 10, 10, 10, 0, 'UTC');
         $output = (string) $timepoint;
 
         $this->assertEquals('2015-10-10T10:10:00Z', $output);
+    }
+
+    public function testMicroseconds()
+    {
+        $timepoint = new TimePoint(2015, 10, 10, 10, 10, 0, 'UTC', 123456);
+        $output = $timepoint->format('Y-m-d H:i:s.u', 'UTC');
+
+        $this->assertEquals('2015-10-10 10:10:00.123456', $output);
     }
 }

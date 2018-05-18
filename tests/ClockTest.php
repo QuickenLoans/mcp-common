@@ -126,6 +126,17 @@ class ClockTest extends TestCase
         $this->assertInstanceOf(TimePoint::class, $output);
     }
 
+    public function testLiveTimeWithMicroseconds()
+    {
+        $clock = new Clock();
+        $time = $clock->read();
+
+        $output = $time->format('u', 'UTC');
+
+        $this->assertStringMatchesFormat('%d', $output);
+        $this->assertNotSame('000000', $output); // The odds of this are pretty rare. Just need to test thats it not default.
+    }
+
     /**
      * @dataProvider fromStringData
      */
@@ -150,10 +161,10 @@ class ClockTest extends TestCase
                 '2015-12-15T10:10:00Z',
                 '2015-12-15 10:10:00.000000 UTC'
             ],
-            // loss of fractional second precision
+            // with fractional second precision
             [
                 '2015-12-15T10:10:00.500000Z',
-                '2015-12-15 10:10:00.000000 UTC'
+                '2015-12-15 10:10:00.500000 UTC'
             ],
             // iso 8601 no seconds
             [

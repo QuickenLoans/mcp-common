@@ -78,27 +78,28 @@ class TimePoint implements JsonSerializable
      *
      * @throws Exception
      */
-    public function __construct($year, $month, $day, $hour = 0, $minute = 0, $second = 0, $timezone = 'UTC')
-    {
-        $inputFormat = '%04d-%02d-%02d %02d:%02d:%02d';
+    public function __construct(
+        int $year,
+        int $month,
+        int $day,
+        int $hour = 0,
+        int $minute = 0,
+        int $second = 0,
+        string $timezone = 'UTC',
+        int $microseconds = 0
+    ) {
+        $inputFormat = '%04d-%02d-%02d %02d:%02d:%02d.%06d';
+        $format = sprintf($inputFormat, $year, $month, $day, $hour, $minute, $second, $microseconds);
 
         try {
             $tz = new DateTimeZone($timezone);
-            $date = new DateTime(sprintf($inputFormat, $year, $month, $day, $hour, $minute, $second), $tz);
+            $date = new DateTime($format, $tz);
         } catch (BaseException $e) {
             throw new Exception('Error with date format: ' . $e->getMessage(), 0, $e);
         }
 
         $this->date = $date;
         $this->date->setTimezone(new DateTimeZone('UTC'));
-    }
-
-    /**
-     * @return string
-     */
-    public function jsonSerialize()
-    {
-        return $this->__toString();
     }
 
     /**
@@ -114,6 +115,16 @@ class TimePoint implements JsonSerializable
      *
      * "2015-10-30T18:30:00Z"
      * ```
+     *
+     * @return string
+     */
+    public function jsonSerialize()
+    {
+        return $this->__toString();
+    }
+
+    /**
+     * Serialize as a RFC 3339 UTC timezone JSON string
      *
      * @return string
      */
