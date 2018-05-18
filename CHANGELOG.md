@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. See
 - Moved `QL\MCP\Common\Time\Clock` to `QL\MCP\Common\Clock`
 - **Clock** now defaults to `UTC` instead of using the system timezone when no second parameter is provided.
 - **TimePoint** now has a default timezone of `UTC` and time of `00:00:00` (Date is still required).
+- Add `__toString` to **TimePoint** so you can now cast to a string: `echo (string) $timepoint;`
 
 ## Removed
 - Removed **MemoryLogger**

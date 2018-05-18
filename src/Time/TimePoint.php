@@ -94,6 +94,14 @@ class TimePoint implements JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function jsonSerialize()
+    {
+        return $this->__toString();
+    }
+
+    /**
      * Serialize as a RFC 3339 UTC timezone JSON string
      *
      * @see https://www.ietf.org/rfc/rfc3339.txt
@@ -109,7 +117,7 @@ class TimePoint implements JsonSerializable
      *
      * @return string
      */
-    public function jsonSerialize()
+    public function __toString()
     {
         return $this->format('Y-m-d\TH:i:s\Z', 'UTC');
     }

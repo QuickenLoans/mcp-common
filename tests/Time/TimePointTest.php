@@ -157,4 +157,12 @@ class TimePointTest extends TestCase
         $this->assertEquals('"2015-10-10T10:10:00Z"', $output);
         $this->assertEquals('2015-10-10T10:10:00Z', json_decode($output, true));
     }
+
+    public function testToString()
+    {
+        $timepoint = new TimePoint(2015, 10, 10, 10, 10, 00, 'UTC');
+        $output = (string) $timepoint;
+
+        $this->assertEquals('2015-10-10T10:10:00Z', $output);
+    }
 }
