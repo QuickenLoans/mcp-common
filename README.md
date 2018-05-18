@@ -30,8 +30,6 @@ composer require ql/mcp-common ~2.0
 This class represents a Microsoft .NET GUID. Note that a Microsoft .NET GUID is the same as an RFC 4122 UUID,
 standard variant, 4th algorithm (see chapter 4.4 of [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt) for details).
 
-*Please note this class requires PHP7 or `paragonie/random_compat`.*
-
 ```php
 use QL\MCP\Common\GUID;
 
@@ -257,8 +255,6 @@ Note that `$period0` and `$period1` are copies of the same time period, just con
 
 Opaque Property is used to obscure secrets while in memory. This is useful to protect sensitive values from debug
 output such as stacktraces or mistaken `echo` or `var_dump` commands.
-
-*Please note this class requires PHP7 or `paragonie/random_compat`.*
 
 ```php
 use QL\MCP\Common\OpaqueProperty;
