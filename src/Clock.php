@@ -1,15 +1,17 @@
 <?php
 /**
- * @copyright (c) 2015 Quicken Loans Inc.
+ * @copyright (c) 2018 Quicken Loans Inc.
  *
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace QL\MCP\Common\Time;
+namespace QL\MCP\Common;
 
 use DateTime;
 use DateTimeZone;
 use Exception as BaseException;
+use QL\MCP\Common\Time\TimeUtil;
+use QL\MCP\Common\Time\TimePoint;
 
 /**
  * Abstract the system clock and provide TimePoint utility methods
@@ -67,14 +69,13 @@ class Clock
      * If an invalid timezone is provided, an exception will be thrown.
      *
      * @param string $current
-     * @param string|null $timezone
+     * @param string $timezone
      *
      * @throws Exception
      */
-    public function __construct($current = 'now', $timezone = null)
+    public function __construct(string $current = 'now', string $timezone = 'UTC')
     {
         $this->current = $current;
-        $timezone = ($timezone === null) ? ini_get('date.timezone') : $timezone;
 
         // ensure that timezone is valid
         try {
@@ -94,7 +95,7 @@ class Clock
      *
      * @return TimePoint|null
      */
-    public function read()
+    public function read(): ?TimePoint
     {
         try {
             $datetime = new DateTime($this->current, $this->timezone);
@@ -115,7 +116,7 @@ class Clock
      *
      * @return TimePoint
      */
-    public function fromDateTime(DateTime $datetime)
+    public function fromDateTime(DateTime $datetime): TimePoint
     {
         return $this->dateTimeToTimePoint($datetime);
     }
@@ -137,7 +138,7 @@ class Clock
      *
      * @return TimePoint|null
      */
-    public function fromString($input, $format = null)
+    public function fromString($input, $format = null): ?TimePoint
     {
         if ($format === null) {
             $formats = [
@@ -174,7 +175,7 @@ class Clock
      *
      * @return bool
      */
-    public function inRange(TimePoint $expiration, TimePoint $creation = null, $skew = null)
+    public function inRange(TimePoint $expiration, TimePoint $creation = null, $skew = null): bool
     {
         $now = $this->read();
 

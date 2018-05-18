@@ -1,51 +1,49 @@
 <?php
 /**
- * @copyright (c) 2015 Quicken Loans Inc.
+ * @copyright (c) 2018 Quicken Loans Inc.
  *
  * For full license information, please view the LICENSE distributed with this source code.
  */
 
-namespace QL\MCP\Common\Time;
+namespace QL\MCP\Common;
 
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use QL\MCP\Common\Time\TimePoint;
 
-class ClockTest extends PHPUnit_Framework_TestCase
+class ClockTest extends TestCase
 {
     public function testConstructorArgumentIsUsedForTimeInterval()
     {
         $tz = 'UTC';
         $time = '2011-11-05 09:02:42';
         $expected = '2011-11-05 05:02:42';
+
         $clock = new Clock($time, $tz);
         $timePoint = $clock->read();
         $actual = $timePoint->format('Y-m-d H:i:s', 'America/Detroit');
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @expectedException QL\MCP\Common\Time\Exception
-     * @expectedExceptionMessage Invalid current datetime UTC.
-     */
     public function testConstructorInvalidTimeArgumentReturnsNull()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Invalid current datetime UTC.');
+
         $clock = new Clock('asdf', 'UTC');
     }
 
-    /**
-     * @expectedException QL\MCP\Common\Time\Exception
-     * @expectedExceptionMessage Invalid timezone asdfasdafasdf
-     */
     public function testInvalidTimeZoneArgumentThrowsException()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Invalid timezone asdfasdafasdf');
+
         new Clock('now', 'asdfasdafasdf');
     }
 
-    public function testNoTimeZoneGivenPullsFromPHPConfig()
+    public function testNoTimeZoneGivenDefaultsToUTC()
     {
-        ini_set('date.timezone', 'America/Detroit');
-
-        $expected = new TimePoint(2001, 3, 30, 0, 0, 0, 'America/Detroit');
+        $expected = new TimePoint(2001, 3, 30, 0, 0, 0, 'UTC');
         $clock = new Clock('2001-03-30 00:00:00');
         $actual = $clock->read();
         $this->assertSame($expected->compare($actual), 0);
@@ -125,7 +123,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $clock = new Clock();
         $output = $clock->fromDateTime(new DateTime());
 
-        $this->assertInstanceOf(TimePoint::CLASS, $output);
+        $this->assertInstanceOf(TimePoint::class, $output);
     }
 
     /**
@@ -137,7 +135,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $output = $clock->fromString($input);
 
         if (is_string($expected)) {
-            $this->assertInstanceOf(TimePoint::CLASS, $output);
+            $this->assertInstanceOf(TimePoint::class, $output);
             $this->assertEquals($expected, $output->format('Y-m-d H:i:s.u e', 'UTC'));
         } else {
             $this->assertEquals($expected, $output);
@@ -205,7 +203,7 @@ class ClockTest extends PHPUnit_Framework_TestCase
         $clock = new Clock();
         $output = $clock->fromString($input, $format);
 
-        $this->assertInstanceOf(TimePoint::CLASS, $output);
+        $this->assertInstanceOf(TimePoint::class, $output);
         $this->assertEquals($expected, $output->format('Y-m-d H:i:s.u e', 'UTC'));
     }
 }
