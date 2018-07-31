@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
+## [1.2.1] - 2018-07-31
+## Changed
+- Clock will now fall back to `UTC` when no timezone is explicitly set and no `date.timezone` is set in php settings.
+
+
 ## [1.2.0] - 2018-03-28
 ## Changed
 - This library now requires PHP 7.0 or higher.

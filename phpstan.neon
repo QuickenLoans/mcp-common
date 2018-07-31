@@ -1,3 +1,0 @@
-parameters:
-    ignoreErrors:
-        - '#Static method DateInterval::__set_state()#'

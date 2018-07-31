@@ -74,7 +74,10 @@ class Clock
     public function __construct($current = 'now', $timezone = null)
     {
         $this->current = $current;
-        $timezone = ($timezone === null) ? ini_get('date.timezone') : $timezone;
+
+        if ($timezone === null) {
+            $timezone = ini_get('date.timezone') ?? 'UTC';
+        }
 
         // ensure that timezone is valid
         try {
