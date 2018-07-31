@@ -76,7 +76,7 @@ class Clock
         $this->current = $current;
 
         if ($timezone === null) {
-            $timezone = ini_get('date.timezone') ?? 'UTC';
+            $timezone = ini_get('date.timezone') ?: 'UTC';
         }
 
         // ensure that timezone is valid
