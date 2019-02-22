@@ -78,14 +78,14 @@ trait TimeUtil
         }
 
         return new TimePoint(
-            $date->format('Y'),
-            $date->format('m'),
-            $date->format('d'),
-            $date->format('H'),
-            $date->format('i'),
-            $date->format('s'),
+            (int) $date->format('Y'),
+            (int) $date->format('m'),
+            (int) $date->format('d'),
+            (int) $date->format('H'),
+            (int) $date->format('i'),
+            (int) $date->format('s'),
             $date->getTimezone()->getName(),
-            $date->format('u')
+            (int) $date->format('u')
         );
     }
 
