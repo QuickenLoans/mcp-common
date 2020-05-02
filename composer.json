@@ -29,7 +29,7 @@
     "scripts": {
         "analyze": "phpstan analyse --memory-limit=1G",
         "lint": "phplint --no-cache --ansi src",
-        "sniff": "phpcs --runtime-set ignore_warnings_on_exit true",
+        "sniff": "phpcs -s --runtime-set ignore_warnings_on_exit true",
         "sniff-nowarn": "phpcs -n",
         "test": "phpunit"
     }

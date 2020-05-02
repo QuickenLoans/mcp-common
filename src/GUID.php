@@ -9,6 +9,7 @@ namespace QL\MCP\Common;
 
 use JsonSerializable;
 use QL\MCP\Common\Utility\ByteString;
+use function random_bytes;
 
 /**
  * This represents a Microsoft .NET GUID
@@ -89,7 +90,7 @@ class GUID implements JsonSerializable
     public static function createFromBase64($base64String): ?GUID
     {
         $bin = base64_decode($base64String, true);
-        if (false === $bin) {
+        if ($bin === false) {
             return null;
         }
 
@@ -121,7 +122,7 @@ class GUID implements JsonSerializable
      */
     public static function create(): GUID
     {
-        $guid = \random_bytes(16);
+        $guid = random_bytes(16);
 
         // Reset version byte to version 4 (0100)
         $guid[6] = chr(ord($guid[6]) & 0x0f | 0x40);
@@ -206,7 +207,7 @@ class GUID implements JsonSerializable
             substr($hexStr, 8, 4),
             substr($hexStr, 12, 4),
             substr($hexStr, 16, 4),
-            substr($hexStr, 20)
+            substr($hexStr, 20),
         ];
 
         if ($format & self::UPPERCASE) {
@@ -291,6 +292,7 @@ class GUID implements JsonSerializable
      * echo $guid->asHex();
      * 9A39ED24175244599AC26B0E8F0DCEC7
      * ```
+     *
      * @return string
      */
     public function asHex()

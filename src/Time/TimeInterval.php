@@ -50,7 +50,7 @@ class TimeInterval
      */
     public function __construct($timeIntervalSpec)
     {
-        list($originalSpec, $extraSpec) = $this->parseSpec($timeIntervalSpec);
+        [$originalSpec, $extraSpec] = $this->parseSpec($timeIntervalSpec);
 
         try {
             $this->dateInterval = new DateInterval($originalSpec);
@@ -89,7 +89,7 @@ class TimeInterval
      *
      * @param string $extraSpec
      *
-     * @return null
+     * @return void
      */
     private function addNegativeInterval($extraSpec)
     {
@@ -103,7 +103,7 @@ class TimeInterval
      *
      * @param string $extraSpec
      *
-     * @return null
+     * @return void
      */
     private function addDays($extraSpec)
     {

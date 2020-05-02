@@ -7,10 +7,10 @@
 
 namespace QL\MCP\Common\Time;
 
-use Exception;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use Exception;
 
 /**
  * Shared code for time classes

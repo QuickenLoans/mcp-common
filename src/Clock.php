@@ -10,8 +10,8 @@ namespace QL\MCP\Common;
 use DateTime;
 use DateTimeZone;
 use Exception as BaseException;
-use QL\MCP\Common\Time\TimeUtil;
 use QL\MCP\Common\Time\TimePoint;
+use QL\MCP\Common\Time\TimeUtil;
 
 /**
  * Abstract the system clock and provide TimePoint utility methods
