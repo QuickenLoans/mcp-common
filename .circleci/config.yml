@@ -1,25 +1,25 @@
 version: 2.1
 
 executors:
-  php71:
-    working_directory: '~/project'
-    docker:
-      - image: 'circleci/php:7.1'
+    php71:
+        working_directory: '~/project'
+        docker:
+          - image: 'circleci/php:7.1'
 
-  php72:
-    working_directory: '~/project'
-    docker:
-      - image: 'circleci/php:7.2'
+    php72:
+        working_directory: '~/project'
+        docker:
+          - image: 'circleci/php:7.2'
 
-  php73:
-    working_directory: '~/project'
-    docker:
-      - image: 'circleci/php:7.3'
+    php73:
+        working_directory: '~/project'
+        docker:
+          - image: 'circleci/php:7.3'
 
-  php74:
-    working_directory: '~/project'
-    docker:
-      - image: 'circleci/php:7.4'
+    php74:
+        working_directory: '~/project'
+        docker:
+          - image: 'circleci/php:7.4'
 
 commands:
     php--run-unit-tests:
@@ -93,59 +93,6 @@ workflows:
                     - 'php73_testing'
                     - 'php74_testing'
 
-# jobs:
-#     fetch_code:
-#         <<: *php72_defaults
-#         steps:
-#             - checkout
-#             - *persist_workspace
-
-    # install_php_dependencies:
-    #     <<: *php72_defaults
-    #     steps:
-    #         - *attach_workspace
-
-    #         - restore_cache:
-    #             keys: [ 'v1-php-deps-{{ checksum "composer.json" }}', 'v1-php-deps' ]
-
-    #         - run:
-    #             name: 'Install PHP dependencies'
-    #             command: |
-    #                 composer --no-interaction --no-progress install
-    #                 composer show
-
-    #         - save_cache:
-    #             key: 'v1-php-deps-{{ checksum "composer.json" }}'
-    #             paths: [ 'vendor' ]
-
-    #         - *persist_workspace
-
-    # static_analysis:
-    #     <<: *php72_defaults
-    #     steps:
-    #         - *attach_workspace
-    #         - run:
-    #             name: 'Run static analysis'
-    #             command: |
-    #                 vendor/bin/phpstan analyse \
-    #                 -l 5 \
-    #                 -c phpstan.neon src \
-    #                 --memory-limit=1G \
-    #                 src
-
-    # linting:
-    #     <<: *php72_defaults
-    #     steps:
-    #         - *attach_workspace
-
-    #         - run:
-    #             name: 'Run syntax check'
-    #             command: 'vendor/bin/phplint --no-cache --ansi src'
-
-    #         - run:
-    #             name: 'Run code formatting check'
-    #             command: 'vendor/bin/phpcs -n --colors src'
-
 jobs:
     php--install-dependencies:
         parameters:
@@ -161,7 +108,6 @@ jobs:
                     - 'v2-<< parameters.executor_version >>-deps-{{ checksum "composer.json" }}'
                     - 'v2-<< parameters.executor_version >>-deps'
 
-            - php--install-libsodium
             - run:
                 name: 'Install PHP dependencies'
                 command: |
