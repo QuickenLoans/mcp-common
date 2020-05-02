@@ -45,10 +45,8 @@ class OpaquePropertyTest extends TestCase
   int(10)
 VARDUMP;
         $expectedWithXDebug = <<<'VARDUMP'
-  public $value =>
-  string(17) "[opaque property]"
-  public $bytes =>
-  int(10)
+  private $value =>
+  string(10)
 VARDUMP;
 
         $notrandom = 'O2yqbji4P1s4zEOnhp6EvedjmOJi34J4g9fo9nZvsyUw2sssoKSHU3lET2vh3ORiLFmgO/xgomJyTRPwW0eiUi7xWkXzA36UlZcIIs1I44qzwaEYOZXd9RFo+pG2Hff3htzoEV3eA6MT/Wx6/c+4sWKR2NtHg7U2+XK09uaf43c=';
@@ -61,10 +59,14 @@ VARDUMP;
         $vardumped = trim(ob_get_clean());
 
         if (extension_loaded('xdebug')) {
+            // NOTE: xdebug now seems to ignore __debugInfo
+            // https://bugs.xdebug.org/view.php?id=1777
             $expected = $expectedWithXDebug;
         }
 
-        $this->assertContains($expected, $vardumped);
+        $x = strpos($vardumped, $expected);
+
+        $this->assertStringContainsString($expected, $vardumped);
     }
 
     /**

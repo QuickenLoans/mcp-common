@@ -37,6 +37,7 @@ use function random_bytes;
  * ```
  *
  * Inspiration and reference:
+ *
  * @see https://github.com/phacility/libphutil/blob/master/src/error/PhutilOpaqueEnvelope.php
  */
 class OpaqueProperty
@@ -94,7 +95,7 @@ class OpaqueProperty
     {
         return [
             'value' => self::SAFE_OUTPUT,
-            'bytes' => ByteString::strlen($this->value)
+            'bytes' => ByteString::strlen($this->value),
         ];
     }
 

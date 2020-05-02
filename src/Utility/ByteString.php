@@ -7,7 +7,8 @@
 
 namespace QL\MCP\Common\Utility;
 
-use QL\MCP\Common\Exception;
+use function mb_strlen;
+use function strlen;
 
 /**
  * This utility protects against string functions being overridden by mb_*.
@@ -32,8 +33,6 @@ use QL\MCP\Common\Exception;
  */
 class ByteString
 {
-    const ERR_STRLEN = 'Could not determine byte size of string.';
-
     /**
      * @type bool
      */
@@ -68,17 +67,13 @@ class ByteString
         }
 
         if (function_exists('\mb_strlen') && self::isOverloaded()) {
-            $len = \mb_strlen($input, '8bit');
+            $len = mb_strlen($input, '8bit');
 
         } else {
-            $len = \strlen($input);
+            $len = strlen($input);
         }
 
-        if (is_int($len)) {
-            return $len;
-        }
-
-        throw new Exception(self::ERR_STRLEN);
+        return $len;
     }
 
     /**
