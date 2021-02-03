@@ -52,7 +52,7 @@ class ClockTest extends TestCase
     /**
      * @dataProvider inRangeData
      */
-    public function testInRange(TimePoint $expiration, TimePoint $creation = null, $skew = null, $expected)
+    public function testInRange(TimePoint $expiration, ?TimePoint $creation, $skew, $expected)
     {
         $clock = new Clock('2015-10-10 10:00:00', 'UTC');
 

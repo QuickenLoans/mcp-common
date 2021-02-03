@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See
 [keepachangelog.com](http://keepachangelog.com) for reference.
 
+## [2.1.0] - 2021-02-03
+
+### Changed
+- Added support for PHP 8.
+- Updated unit tests to PHP Unit 9.
+
 ## [2.0.0] - 2018-05-18
 ## Added
 - Add microseconds to `TimePoint`.
